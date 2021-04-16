@@ -1,0 +1,49 @@
+.logodesign {
+    margin-top: 50px;
+    height: 150px;
+    width: auto;
+}
+
+.background {
+    background-color: #fefbefff;
+}
+
+.parent {
+    width: 400px;
+    margin: auto;
+}
+
+.positioning {
+    margin-top: 150px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 400px;
+}
+
+.InputBox {
+    margin-bottom: 20px;
+    width: 300px;
+}
+
+.buttonsPositioning {
+    display: flex;
+    justify-content: space-between;
+}
+
+.antd-button-primary {
+    background-color: #ffab40a3;
+    color: black;
+    border: 1px solid grey;
+}
+
+.antd-button-primary:hover {
+    background-color: orange;
+    color: black;
+    border: 1px solid grey;
+}
+
+h1 {
+    color: #1c4587;
+    font-weight: 700;
+}
