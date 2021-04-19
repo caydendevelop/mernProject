@@ -1,13 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const myRoute = require('./routes/my-routes');
-const HttpError = require('./models/http-error')
+const courseRoute = require('./routes/course-route.js');
+const userRoute = require('./routes/user-route');
+const HttpError = require('./models/http-error');
+const mongoose = require('mongoose');
 
 const app = express();
 
 app.use(bodyParser.json()); // tell the system we want the request be parsed to be json 
 
-app.use('/', myRoute);
+app.use('/course', courseRoute);
+app.use('/user', userRoute);
 
 app.use((req, res, next) => { // error handler for unsupported route
   const error = new HttpError('Could not find this route.', 404);
@@ -23,4 +26,13 @@ app.use((error, req, res, next) => { // 4 parameters = default error handler mid
 
 });
 
-app.listen(5000);
+mongoose
+  .connect(
+    `mongodb+srv://cayden:WWgu2XCULtKK4aSx@cluster0.ecazw.mongodb.net/iimt4601?retryWrites=true&w=majority`
+  )
+  .then(() => {
+    app.listen(5000);
+  })
+  .catch(err => {
+    console.log(err);
+  });
