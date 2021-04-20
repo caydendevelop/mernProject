@@ -1,39 +1,46 @@
 .gradeDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	height: 15em;
   background-color: #189eff;
   margin-bottom: 0;
-  padding:0em 1em 0em 1em;
+  padding:0em 3em 0em 3em;
   color: #ffffff;
   
 }
 
 .gradeDiv h1{
-  display: inline-block;
-  font-size: 4em;
-  margin-left: 1em;
+  text-align: center;
+  font-size: 3em;
   color:white;
 }
 
 .gradeDiv h3{
-  display: inline-block;
+  text-align: center;
   font-size: 2em;
   color:white;
 }
 
 .workloadDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	height: 15em;
   background-color: #189eff;
-  padding: 0em 1em 0em 1em;
+  margin-bottom: 0;
+  padding:0em 3em 0em 3em;
   color: #ffffff;
 }
 
 .workloadDiv h1{
-  display: inline-block;
-  font-size: 4em;
-  margin-left: 1em;
+  text-align: center;
+  font-size: 3em;
   color:white;
 }
 
 .workloadDiv h3{
-  display: inline-block;
+  text-align: center;
   font-size: 2em;
   color:white;
 }

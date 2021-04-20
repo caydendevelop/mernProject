@@ -11,6 +11,7 @@ import LoginPage from './LoginPage/LoginPage'
 import CourseListPage from './CourseListPage/CourseListPage'
 import CoursePage from './CoursePage/CoursePage'
 import Navbar from "./shared/component/Navbar";
+import CreateReviewPage from "./CreateReviewPage/CreateReviewPage";
 
 const App = () => {
 	return (
@@ -20,8 +21,8 @@ const App = () => {
 			<Route path="/signup" exact component={SignupPage}/>
 			<Route path="/login" exact component={LoginPage}/>
 			<Route path="/course" exact component={CourseListPage}/>
-			<Route path="/course/coursecode" exact component={CoursePage}/>
-
+			<Route path="/course/:coursecode" exact component={CoursePage}/>
+			<Route path="/course/:coursecode/createreview" exact component={CreateReviewPage}/>
 		</BrowserRouter>
 	);
 };
