@@ -20,6 +20,7 @@ const CoursePage = () => {
 						prefix={<SearchOutlined />}
 						allowClear
 						enterButton
+						size="large"
 					/>
 				</div>
 			</div>

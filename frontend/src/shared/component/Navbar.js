@@ -34,7 +34,11 @@ const Navbar = () => {
 			</Menu.Item>
 
 			<Menu.Item key="CoursePage">
-				<Link to="/course/coursecode">CoursePage</Link>
+				<Link to="/course/:coursecode">CoursePage</Link>
+			</Menu.Item>
+
+			<Menu.Item key="CreateReviewPage">
+				<Link to="/course/:coursecode/createreview">CreateReviewPage</Link>
 			</Menu.Item>
 
 			<SubMenu key="SubMenu" title="Authentication">
