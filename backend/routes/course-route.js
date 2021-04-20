@@ -6,8 +6,8 @@ const checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
 
-router.get('/:courseCode', courseController.getCourseByCourseCode);
-router.use(checkAuth);
+router.get('/:courseCode', courseController.getCourseByCourseCode); //localhost:3000/course/COMP3322 // localhost:3000
+// router.use(checkAuth);
 router.post('/:courseCode/createReview', courseController.createReview);
 
 module.exports = router;

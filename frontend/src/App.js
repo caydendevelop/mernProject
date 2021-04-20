@@ -5,9 +5,9 @@ import {
 	Redirect,
 	Switch,
 } from "react-router-dom";
-import IndexPage from './indexPage/IndexPage'
-import CoursePage from './coursePage/CoursePage'
-import CourseDetailPage from './coursePage/courseDetailPage/CourseDetailPage'
+import IndexPage from './IndexPage/IndexPage'
+import CourseListPage from './CourseListPage/CourseListPage'
+import CoursePage from './CoursePage/CoursePage'
 import Navbar from "./shared/component/Navbar";
 
 const App = () => {
@@ -15,8 +15,8 @@ const App = () => {
 		<BrowserRouter>
 			<Navbar />
 			<Route path="/" exact component={IndexPage}/>
-			<Route path="/course" exact component={CoursePage}/>
-			<Route path="/course/coursecode" exact component={CourseDetailPage}/>
+			<Route path="/course" exact component={CourseListPage}/>
+			<Route path="/course/coursecode" exact component={CoursePage}/>
 		</BrowserRouter>
 	);
 };

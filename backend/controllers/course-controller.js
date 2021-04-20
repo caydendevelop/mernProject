@@ -6,11 +6,11 @@ const User = require("../models/user");
 const mongoose = require("mongoose");
 
 const getCourseByCourseCode = async (req, res, next) => {
-	const courseCode = req.params.courseCode;
+	const courseCode2 = req.params.courseCode;
 
 	let course;
 	try {
-		course = await Course.findOne({ courseCode: courseCode }).exec();
+		course = await Course.findOne({ courseCode: courseCode2 }).exec();
 	} catch (err) {
 		const error = new HttpError(
 			"Something went wrong, could not find a course.",
@@ -37,8 +37,8 @@ const createReview = async (req, res, next) => {
 			new HttpError("Invalid inputs passed, please check your data.", 422)
 		);
 	}
-	const { grade, workload, comment } = req.body;
-	const creator = req.userData.userId;
+	const { grade, workload, comment ,creator} = req.body;
+	// const creator = req.userData.userId;
 	const courseCode = req.params.courseCode;
 	const createdReview = new Review({
 		grade,

@@ -1,0 +1,35 @@
+.reviewGrade {
+	background-color: #189eff;
+	padding: 0em 1em 0em 1em;
+	color: #ffffff;
+}
+
+.reviewGrade h1 {
+	font-size: 3em;
+	text-align: center;
+	color: white;
+}
+
+.reviewGrade h2 {
+	text-align: center;
+	font-size: 1em;
+	color: white;
+}
+
+.reviewWorkload {
+	background-color: #189eff;
+	padding: 0em 1em 0em 1em;
+	color: #ffffff;
+}
+
+.reviewWorkload h1 {
+	text-align: center;
+	font-size: 3em;
+	color: white;
+}
+
+.reviewWorkload h2 {
+	text-align: center;
+	font-size: 1em;
+	color: white;
+}

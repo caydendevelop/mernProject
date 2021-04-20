@@ -32,17 +32,17 @@ const Navbar = () => {
 				</Link>
 			</Menu.Item>
 
-			<Menu.Item key="indexPage">
+			<Menu.Item key="IndexPage">
 				<Link to="/">
 					Index Page
 				</Link>
 			</Menu.Item>
-			<Menu.Item key="coursePage">
+			<Menu.Item key="CourseListPage">
 				<Link to="/course">
-					Course Page
+					Course List Page
 				</Link>
 			</Menu.Item>
-			<Menu.Item key="authenticationPage">
+			<Menu.Item key="AuthenticationPage">
 				<Link to="/authenticate">
 					Authentication Page
 				</Link>
