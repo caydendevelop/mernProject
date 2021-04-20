@@ -13,7 +13,7 @@ const IndexPage = () => {
 					<div className="buttonDiv">
 						<span>
 							<h5 className="h5_2_style">Don't have an account?</h5>
-							<Button type="primary">Register</Button>
+							<Button type="primary">Signup</Button>
 						</span>
 						<span>
 							<h5 className="h5_2_style">Here to begin</h5>

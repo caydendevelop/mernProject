@@ -13,12 +13,6 @@ const Navbar = () => {
 		fontSize: "16px",
 	};
 
-  const subNavBarStyle = {
-    float: "right",
-    paddingTop: "2px"
-
-  }
-
 	return (
 		<Menu
 			onClick={(e) => setCurrent(e.key)}
@@ -33,30 +27,24 @@ const Navbar = () => {
 			</Menu.Item>
 
 			<Menu.Item key="IndexPage">
-				<Link to="/">
-					Index Page
-				</Link>
+				<Link to="/">Index Page</Link>
 			</Menu.Item>
 			<Menu.Item key="CourseListPage">
-				<Link to="/course">
-					Course List Page
-				</Link>
+				<Link to="/course">Course List Page</Link>
 			</Menu.Item>
 
 			<Menu.Item key="CoursePage">
-				<Link to="/course/coursecode">
-					CoursePage
-				</Link>
-			</Menu.Item>
-			
-			<Menu.Item key="AuthenticationPage">
-				<Link to="/authenticate">
-					Authentication Page
-				</Link>
+				<Link to="/course/coursecode">CoursePage</Link>
 			</Menu.Item>
 
-			
-	
+			<SubMenu key="SubMenu" title="Authentication">
+				<Menu.Item key="Signup">
+					<Link to="/signup">Signup</Link>
+				</Menu.Item>
+				<Menu.Item key="Login">
+					<Link to="/login">Login</Link>
+				</Menu.Item>
+			</SubMenu>
 		</Menu>
 	);
 };

@@ -11,7 +11,7 @@ const signup = async (req, res, next) => {
 			new HttpError("Invalid inputs passed, please check your data.", 422)
 		);
 	}
-	const { uid, frontName, lastName, userName, email, password } = req.body;
+	const { uid, userName, email, password } = req.body;
 
 	let existingUser;
 	try {
@@ -38,8 +38,6 @@ const signup = async (req, res, next) => {
 
 	const createdUser = new User({
 		uid,
-		frontName,
-		lastName,
 		userName,
 		email,
 		password: hashedPassword,
