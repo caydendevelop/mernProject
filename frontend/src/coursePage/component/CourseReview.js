@@ -5,21 +5,7 @@ import "./CourseReview.css";
 const CourseReview = () => {
 	return (
 		<React.Fragment>
-			{/* <div className="reviewFrame">
-        <div className="reviewUser">
-
-        </div>
-        <div className="reviewComment">
-
-        </div>
-        <div className="reviewGrade">
-
-        </div>
-        <div className="reviewWorkload">
-          
-        </div>
-      </div> */}
-
+			<div className="courseReview">
 			<Row gutter={16}>
 				<Col span={12}>
 					<Row>
@@ -36,7 +22,7 @@ const CourseReview = () => {
 									This is comment safj sdafj dslaf lsda flskdf
 									jlsakdjflksjflksajfl; sfs lfsdlkjsdlkf jslakdfjldsajfl;k
 									sdjfl;dsjf;ldas;lsdfsfsafdsafd safdsaffds asadfdsaf
-									dsafdsafsadfs dafdsadslf 
+									
 								</p>
 							</div>
 						</Col>
@@ -55,6 +41,7 @@ const CourseReview = () => {
 					</div>
 				</Col>
 			</Row>
+			</div>
 		</React.Fragment>
 	);
 };

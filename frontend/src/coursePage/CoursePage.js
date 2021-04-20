@@ -1,35 +1,44 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./CoursePage.css";
+import { Button } from "antd";
 import CourseDetail from "./component/CourseDetail";
 import CourseRating from "./component/CourseRating";
 import CourseReview from "./component/CourseReview";
 
 const dividerStyle = {
-	width: "70%",
-	marginLeft: "15%",
-	marginRight: "15%",
 	marginTop: "1em",
 	marginBottom: "1em",
 	height: "1px",
-  color: "#c1c1c1",
-  backgroundColor: "#c1c1c1",
-  border: "none"
+	color: "#c1c1c1",
+	backgroundColor: "#c1c1c1",
+	border: "none",
 };
 
 const CoursePage = () => {
 	return (
 		<React.Fragment>
-			<div className="courseDetail">
-				<CourseDetail />
-			</div>
-			
-			<div className="courseRating">
-				<CourseRating />
-			</div>
-			<hr style={dividerStyle} />
-			<div className="courseReview">
-				<CourseReview />
+			<div className="coursePage">
+				<div className="courseDetailDiv">
+					<CourseDetail />
+				</div>
+
+				<div className="courseRatingDiv">
+					<CourseRating />
+				</div>
+
+				<hr style={dividerStyle} />
+
+				<h2 className>User Review</h2>
+
+				<div className="courseReviewDiv">
+					<CourseReview />
+					<CourseReview />
+				</div>
+
+				<div className="createReviewDiv">
+					<Button type="primary">Create Review</Button>
+				</div>
 			</div>
 		</React.Fragment>
 	);
