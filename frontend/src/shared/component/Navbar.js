@@ -47,6 +47,12 @@ const Navbar = () => {
 					Authentication Page
 				</Link>
 			</Menu.Item>
+
+			<Menu.Item key="testing">
+				<Link to="/course/coursecode">
+					Testing
+				</Link>
+			</Menu.Item>
 	
 		</Menu>
 	);

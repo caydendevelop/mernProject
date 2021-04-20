@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.get('/:courseCode', courseController.getCourseByCourseCode);
 router.use(checkAuth);
-router.post('/:courseCode/addReview', courseController.createReview);
+router.post('/:courseCode/createReview', courseController.createReview);
 
 module.exports = router;

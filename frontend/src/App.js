@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import IndexPage from './indexPage/IndexPage'
 import CoursePage from './coursePage/CoursePage'
+import CourseDetailPage from './coursePage/courseDetailPage/CourseDetailPage'
 import Navbar from "./shared/component/Navbar";
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
 			<Navbar />
 			<Route path="/" exact component={IndexPage}/>
 			<Route path="/course" exact component={CoursePage}/>
+			<Route path="/course/coursecode" exact component={CourseDetailPage}/>
 		</BrowserRouter>
 	);
 };
