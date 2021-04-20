@@ -29,7 +29,7 @@ const CoursePage = () => {
 
 				<hr style={dividerStyle} />
 
-				<h2 className>User Review</h2>
+				<h2>User Review</h2>
 
 				<div className="courseReviewDiv">
 					<CourseReview />
