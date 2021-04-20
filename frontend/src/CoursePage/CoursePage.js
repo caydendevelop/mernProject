@@ -37,7 +37,7 @@ const CoursePage = () => {
 				</div>
 
 				<div className="createReviewDiv">
-					<Button type="primary">Create Review</Button>
+					<Link to='/course/:coursecode/createreview'><Button type="primary">Create Review</Button></Link>
 				</div>
 			</div>
 		</React.Fragment>
