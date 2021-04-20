@@ -20,6 +20,7 @@ const CourseDetailPage = () => {
 			<div className="courseRating">
 				<CourseRating />
 			</div>
+			
 		</React.Fragment>
 	);
 };
