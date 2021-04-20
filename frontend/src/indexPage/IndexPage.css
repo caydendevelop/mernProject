@@ -1,0 +1,42 @@
+.h2_1_style{
+  color:white;
+  font-size: 4em;
+  text-align: center;
+  /* padding-top:1em */
+}
+
+.h5_1_style{
+  color:white;
+  font-size: 2em;
+  text-align: center;
+  /* padding-top:1em */
+}
+
+
+.h5_2_style{
+  color:white;
+  text-align: center;
+  /* padding-top:1em */
+}
+
+.buttonDiv{
+  margin-top: 3em;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.indexPageBackgroundImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* width:80% ;
+  margin-left: 10%;
+  margin-right: 10%; */
+  text-align: center;
+  background-image: url("../img/discussion.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 42rem;
+  margin-top: 0;
+}
