@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col } from "antd";
 import "./CourseReview.css";
 
-const CourseReview = () => {
+const CourseReview = (props) => {
 	return (
 		<React.Fragment>
 			<div className="courseReview">
@@ -19,9 +19,7 @@ const CourseReview = () => {
 							<Col span={24}>
 								<div className="reviewComment">
 									<p>
-										This is comment safj sdafj dslaf lsda flskdf
-										jlsakdjflksjflksajfl; sfs lfsdlkjsdlkf jslakdfjldsajfl;k
-										sdjfl;dsjf;ldas;lsdfsfsafdsafd safdsaffds asadfdsaf
+										{props.comment}
 									</p>
 								</div>
 							</Col>
@@ -31,16 +29,16 @@ const CourseReview = () => {
 						<div className="reviewGrade">
 							{/* need 1 extra div to apply the display:flex and align-item: center */}
 							<div>
-								<h2>Average Grade: </h2>
-								<h1>B-</h1>
+								<h2>Grade: </h2>
+								<h1>{props.grade}</h1>
 							</div>
 						</div>
 					</Col>
 					<Col span={6}>
 						<div className="reviewWorkload">
 							<div>
-								<h2>Average Workload: </h2>
-								<h1>5/5</h1>
+								<h2>Workload: </h2>
+								<h1>{props.workload}</h1>
 							</div>
 						</div>
 					</Col>
