@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect, Component } from "react";
+import React from "react";
 import { Descriptions } from "antd";
 
 const wholeStyle = {

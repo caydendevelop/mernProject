@@ -18,28 +18,30 @@ const dividerStyle = {
 
 const CoursePage = () => {
 
-	const [courseDetail, setCourseDetail] = useState(null)
-	const [hasLoaded, setHasLoaded] = useState(false)
+	const [loadedCourse, setLoadedCourse] = useState(null);
+	const [hasLoaded, setHasLoaded] = useState(false);
+
+	const courseCode = useParams().courseCode;
+	console.log(courseCode);
 
 	useEffect (() => {
 		axios
-			.get(`http://localhost:5000/course/COMP3322`)
+			.get(`http://localhost:5000/course/${courseCode}`)
 			.then(res => {
-		console.log(res)
-		setCourseDetail(res.data.course)
+		setLoadedCourse(res.data.course)
 		setHasLoaded(true)
 			})
 			.catch(err => {
 				console.log(err)
 			})
-	})
+	}, []);
 
 
 	return (
 		<React.Fragment>
 			<div className="coursePage">
 				<div className="courseDetailDiv">
-					<CourseDetail items={courseDetail} status={hasLoaded}/>
+					<CourseDetail items={loadedCourse} status={hasLoaded}/>
 				</div>
 
 				<div className="courseRatingDiv">
@@ -52,7 +54,7 @@ const CoursePage = () => {
 
 				<div className="courseReviewDiv">
 					<CourseReview />
-					<CourseReview />
+					
 				</div>
 
 				<div className="createReviewDiv">
