@@ -11,7 +11,7 @@ const CourseReview = (props) => {
 						<Row>
 							<Col span={24}>
 								<div className="reviewUser">
-									<h3>userName</h3>
+									<h3>{props.userName}</h3>
 								</div>
 							</Col>
 						</Row>

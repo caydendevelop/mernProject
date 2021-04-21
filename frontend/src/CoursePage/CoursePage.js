@@ -68,6 +68,7 @@ const CoursePage = () => {
 				<div className="courseReviewDiv">
 					{loadedReview.map((rev) => (
 						<CourseReview
+							userName={rev.creator}
 							comment={rev.comment}
 							grade={rev.grade}
 							workload={rev.workload}

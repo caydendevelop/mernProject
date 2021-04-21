@@ -31,35 +31,53 @@ const getCourseByCourseCode = async (req, res, next) => {
 };
 
 const getReviewByCourseCode = async (req, res, next) => {
-  const courseCode2 = req.params.courseCode;
+	const courseCode2 = req.params.courseCode;
 
-  // let places;
-  let courseWithReview;
-  try {
-    courseWithReview = await Course.findOne({ courseCode: courseCode2 }).populate('review').exec();
-  } catch (err) {
-    const error = new HttpError(
-      'Fetching course failed, please try again.',
-      500
-    );
-    return next(error);
-  }
+	// let places;
+	let courseWithReview, userOfReview;
+	try {
+		courseWithReview = await Course.findOne({ courseCode: courseCode2 })
+			.populate("review")
+			.exec();
+	} catch (err) {
+		const error = new HttpError(
+			"Fetching course failed, please try again.",
+			500
+		);
+		return next(error);
+	}
 
-  // if (!places || places.length === 0) {
-  if (!courseWithReview || courseWithReview.review.length === 0) {
-    return next(
-      new HttpError('Could not find review for the provided course code.', 404)
-    );
-  }
+	// if (!places || places.length === 0) {
+	if (!courseWithReview || courseWithReview.review.length === 0) {
+		return next(
+			new HttpError("Could not find review for the provided course code.", 404)
+		);
+	}
+	// array contains the creator id
+	creators = courseWithReview.review.map((i) => i.creator);
 
-  res.json({
-    review: courseWithReview.review.map(input =>
-      input.toObject({ getters: true })
-    )
-  });
+	// try {
+	//   userOfReview = await Review.findById().populate('creator').exec();
+	// } catch (err) {
+	//   const error = new HttpError(
+	//     'Fetching user failed, please try again.',
+	//     500
+	//   );
+	//   return next(error);
+	// }
+
+	res.json({
+		review: courseWithReview.review.map(
+			(input) => input.toObject({ getters: true }),
+			
+		),
+		creators
+		// ,
+		// user: userOfReview.creator.map(input =>
+		//   input.toObject({ getters: true })
+		// )
+	});
 };
-
-
 
 const createReview = async (req, res, next) => {
 	const errors = validationResult(req);
@@ -68,7 +86,7 @@ const createReview = async (req, res, next) => {
 			new HttpError("Invalid inputs passed, please check your data.", 422)
 		);
 	}
-	const { grade, workload, comment ,creator} = req.body;
+	const { grade, workload, comment, creator } = req.body;
 	// const creator = req.userData.userId;
 	const courseCode = req.params.courseCode;
 	const createdReview = new Review({
@@ -81,8 +99,10 @@ const createReview = async (req, res, next) => {
 
 	let course, user;
 	try {
-		course = await Course.findOne({ courseCode: courseCode }).populate('review').exec();
-		user = await User.findById(creator).populate('review');
+		course = await Course.findOne({ courseCode: courseCode })
+			.populate("review")
+			.exec();
+		user = await User.findById(creator).populate("review");
 	} catch (err) {
 		const error = new HttpError(
 			"Creating review step 1 failed, please try again.",
@@ -105,15 +125,16 @@ const createReview = async (req, res, next) => {
 		return next(error);
 	}
 
-  for (i of course.review){ // check whether the user has created review for this course before
-    if (i.creator == creator) {
-      const error = new HttpError(
-        "Could not create more than 1 review by single user.",
-        500
-      );
-      return next(error);
-    }
-  }
+	for (i of course.review) {
+		// check whether the user has created review for this course before
+		if (i.creator == creator) {
+			const error = new HttpError(
+				"Could not create more than 1 review by single user.",
+				500
+			);
+			return next(error);
+		}
+	}
 
 	try {
 		const sess = await mongoose.startSession();
