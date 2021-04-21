@@ -30,6 +30,37 @@ const getCourseByCourseCode = async (req, res, next) => {
 	res.json({ course: course.toObject({ getters: true }) });
 };
 
+const getReviewByCourseCode = async (req, res, next) => {
+  const courseCode2 = req.params.courseCode;
+
+  // let places;
+  let courseWithReview;
+  try {
+    courseWithReview = await Course.findOne({ courseCode: courseCode2 }).populate('review').exec();
+  } catch (err) {
+    const error = new HttpError(
+      'Fetching course failed, please try again.',
+      500
+    );
+    return next(error);
+  }
+
+  // if (!places || places.length === 0) {
+  if (!courseWithReview || courseWithReview.review.length === 0) {
+    return next(
+      new HttpError('Could not find review for the provided course code.', 404)
+    );
+  }
+
+  res.json({
+    review: courseWithReview.review.map(input =>
+      input.toObject({ getters: true })
+    )
+  });
+};
+
+
+
 const createReview = async (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -108,4 +139,5 @@ const createReview = async (req, res, next) => {
 };
 
 exports.getCourseByCourseCode = getCourseByCourseCode;
+exports.getReviewByCourseCode = getReviewByCourseCode;
 exports.createReview = createReview;
