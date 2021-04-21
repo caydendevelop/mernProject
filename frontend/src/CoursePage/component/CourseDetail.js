@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useLayoutEffect, Component } from "react";
 import { Descriptions } from "antd";
-import axios from 'axios'
 
 const wholeStyle = {
 	marginTop: "0.2em",
@@ -8,23 +7,8 @@ const wholeStyle = {
 };
   
 
-const CourseDetail = () => {
+const CourseDetail = (props) => {
 
-	const [courseDetail, setCourseDetail] = useState(null)
-	const [hasLoaded, setHasLoaded] = useState(false)
-
-	useEffect (() => {
-		axios
-			.get(`http://localhost:5000/course/COMP3322`)
-			.then(res => {
-		console.log(res)
-		setCourseDetail(res.data)
-		setHasLoaded(true)
-			})
-			.catch(err => {
-				console.log(err)
-			})
-	})
 	
 	return (
 		<Descriptions
@@ -33,22 +17,21 @@ const CourseDetail = () => {
 			contentStyle={wholeStyle}
 			column={3}
 		>
-			{/* {courseDetail.course.courseCode} */}
-			{/* {courseDetail.course.instructor} */}
-			{hasLoaded ? 
+
+			{props.status ? 
 			[
-				<Descriptions.Item label="Course Code">{courseDetail.course.courseCode}</Descriptions.Item>, 
+				<Descriptions.Item label="Course Code">{props.items.courseCode}</Descriptions.Item>, 
 				<Descriptions.Item label="Name" span={2}>
-					{courseDetail.course.name}
+					{props.items.name}
 				</Descriptions.Item>,
 
-				<Descriptions.Item label="Instructor">{courseDetail.course.instructor}</Descriptions.Item>,
+				<Descriptions.Item label="Instructor">{props.items.instructor}</Descriptions.Item>,
 				<Descriptions.Item label="Time" span={2}>
-					{courseDetail.course.time}
+					{props.items.time}
 				</Descriptions.Item>,
 
 				<Descriptions.Item label="Description" span={2}>
-					{courseDetail.course.description}
+					{props.items.description}
 				</Descriptions.Item>
 			]
  			: null}
