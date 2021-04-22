@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
+import axios from "axios"
 
 const layout = {
   labelCol: {
@@ -18,7 +19,17 @@ const tailLayout = {
 
 const SignupForm = () => {
   const onFinish = (values) => {
-    console.log('Success:', values);
+    console.log('Submit Register Form Success');
+    axios.post(`http://localhost:5000/user/signup`, {
+      uid: values.uid,
+      userName: values.userName,
+      email: values.email,
+      password: values.password
+    }, { 
+      headers: { "Content-Type": "application/json" },
+    })
+    .then(response => response.status)
+    .catch(err => console.warn(err.response));
   };
 
   const onFinishFailed = (errorInfo) => {

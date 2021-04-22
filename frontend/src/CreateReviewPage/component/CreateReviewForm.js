@@ -1,5 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Select } from "antd";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const layout = {
 	labelCol: {
@@ -17,8 +19,22 @@ const tailLayout = {
 };
 
 const CreateReviewForm = () => {
+	// const courseCode = useParams().courseCode;
+	// console.log(courseCode);
+
 	const onFinish = (values) => {
 		console.log("Success:", values);
+		//{courseCode}
+		axios.post(`http://localhost:5000/course/COMP3322/createReview`, {
+      	creator: "607c3bb267d44441586b6ff8",
+      	grade: values.grade,
+      	workload: values.workload,
+      	comment: values.comment
+		}, { 
+		headers: { "Content-Type": "application/json" },
+		})
+		.then(response => response.status)
+		.catch(err => console.warn(err.response.data.message));
 	};
 
 	const onFinishFailed = (errorInfo) => {
@@ -85,10 +101,10 @@ const CreateReviewForm = () => {
 				name="comment"
 				rules={
 					[
-						// {
-						//   required: true,
-						//   message: 'Please input your password!',
-						// },
+						{
+						  required: true,
+						  message: 'Please input the comment!',
+						},
 					]
 				}
 			>
