@@ -16,7 +16,7 @@ const CourseListPage = () => {
 		console.log(newPath);
 		
 	};
-	if(newPath != "")
+	if(newPath !== "")
 		return <Redirect to={newPath} />;
 	return (
 		<React.StrictMode>

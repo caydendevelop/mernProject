@@ -1,5 +1,6 @@
-import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import React, {useContext} from 'react';
+import { Form, Input, Button } from 'antd';
+import { AuthContext } from "../../shared/context/auth-context";
 
 const layout = {
   labelCol: {
@@ -17,8 +18,13 @@ const tailLayout = {
 };
 
 const LoginForm = () => {
+
+  const auth = useContext(AuthContext);
+
   const onFinish = (values) => {
+    auth.login();
     console.log('Success:', values);
+
   };
 
   const onFinishFailed = (errorInfo) => {

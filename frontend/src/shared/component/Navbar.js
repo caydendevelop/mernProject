@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Menu } from "antd";
+import { AuthContext } from "../../shared/context/auth-context";
 import "antd/dist/antd.css";
 import "./Navbar.css";
 
@@ -8,10 +9,14 @@ const { SubMenu } = Menu;
 
 const Navbar = () => {
 	const [current, setCurrent] = useState("indexPage");
-
 	const navBarStyle = {
 		fontSize: "16px",
 	};
+
+	const auth = useContext(AuthContext); // the whole component will re-render when auth is changed (provided by useContext)
+	const logoutFunc = () => {
+		auth.logout();
+	}
 
 	return (
 		<Menu
@@ -41,14 +46,20 @@ const Navbar = () => {
 				<Link to="/course/:coursecode/createreview">CreateReviewPage</Link>
 			</Menu.Item>
 
-			<SubMenu key="SubMenu" title="Authentication">
-				<Menu.Item key="Signup">
-					<Link to="/signup">Signup</Link>
+			{!auth.isLoggedIn ? (
+				<SubMenu key="SubMenu" title="Authentication">
+					<Menu.Item key="Signup">
+						<Link to="/signup">Signup</Link>
+					</Menu.Item>
+					<Menu.Item key="Login">
+						<Link to="/login">Login</Link>
+					</Menu.Item>
+				</SubMenu>
+			) : (
+				<Menu.Item key="Logout" onClick={logoutFunc}>
+					Logout
 				</Menu.Item>
-				<Menu.Item key="Login">
-					<Link to="/login">Login</Link>
-				</Menu.Item>
-			</SubMenu>
+			)}
 		</Menu>
 	);
 };

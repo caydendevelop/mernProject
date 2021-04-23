@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/:courseCode', courseController.getCourseByCourseCode); //localhost:3000/course/COMP3322 // localhost:3000
 router.get('/:courseCode/review', courseController.getReviewByCourseCode);
-// router.use(checkAuth);
+router.use(checkAuth);
 router.post('/:courseCode/createReview', courseController.createReview);
 
 module.exports = router;

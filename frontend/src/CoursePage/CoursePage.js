@@ -53,9 +53,9 @@ const CoursePage = () => {
 			.catch((err) => {
 				console.log(err.response.data);
 			});
-	}, []);
+	}, [courseCode, loadedReview]);
 
-	if (errorStatus == 404) {
+	if (errorStatus === 404) {
 		return (
 			<Result
 				status="404"
