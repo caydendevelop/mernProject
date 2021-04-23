@@ -4,6 +4,33 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const getUserById = async (req, res, next) => {
+  const placeId = req.params.pid;
+
+  let place;
+  try {
+    place = await Place.findById(placeId);
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not find a place.',
+      500
+    );
+    return next(error);
+  }
+
+  if (!place) {
+    const error = new HttpError(
+      'Could not find place for the provided id.',
+      404
+    );
+    return next(error);
+  }
+
+  res.json({ place: place.toObject({ getters: true }) });
+};
+
+
+
 const signup = async (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -33,7 +60,7 @@ const signup = async (req, res, next) => {
 	try {
 		hashedPassword = await bcrypt.hash(password, 12);
 	} catch (err) {
-		const error = new HttpError("hassh password failed", 500);
+		const error = new HttpError("hash password failed", 500);
 	}
 
 	const createdUser = new User({
