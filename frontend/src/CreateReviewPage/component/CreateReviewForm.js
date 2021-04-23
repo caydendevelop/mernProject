@@ -1,4 +1,6 @@
 import React from "react";
+import axios from 'axios';
+import {useParams} from 'react-router-dom';
 import { Form, Input, Button, Select } from "antd";
 
 const layout = {
@@ -17,8 +19,25 @@ const tailLayout = {
 };
 
 const CreateReviewForm = () => {
+	const courseCode = useParams().courseCode;
+
 	const onFinish = (values) => {
-		console.log("Success:", values);
+		console.log(values.courseCode);
+		axios
+			.post(
+				`http://localhost:5000/course/${values.courseCode}/createReview`,
+				{
+					creator: "607c3bb267d44441586b6ff8",
+					grade: values.grade,
+					workload: values.workload,
+					comment: values.comment,
+				},
+				{
+					headers: { "Content-Type": "application/json" },
+				}
+			)
+			.then((response) => response.status)
+			.catch((err) => console.warn(err.response.data.message));
 	};
 
 	const onFinishFailed = (errorInfo) => {
@@ -35,7 +54,13 @@ const CreateReviewForm = () => {
 			onFinish={onFinish}
 			onFinishFailed={onFinishFailed}
 		>
-      <Form.Item
+			<Form.Item
+				name="courseCode"
+				hidden="true"
+				initialValue={courseCode}
+			/>
+
+			<Form.Item
 				label="Grade"
 				name="grade"
 				rules={[
@@ -47,17 +72,17 @@ const CreateReviewForm = () => {
 			>
 				<Select allowClear>
 					<Select.Option value="11">A+</Select.Option>
-          <Select.Option value="10">A</Select.Option>
-          <Select.Option value="9">A-</Select.Option>
-          <Select.Option value="8">B+</Select.Option>
-          <Select.Option value="7">B</Select.Option>
-          <Select.Option value="6">B-</Select.Option>
-          <Select.Option value="5">C+</Select.Option>
-          <Select.Option value="4">C</Select.Option>
-          <Select.Option value="3">C-</Select.Option>
-          <Select.Option value="2">D+</Select.Option>
-          <Select.Option value="1">D</Select.Option>
-          <Select.Option value="0">F</Select.Option>
+					<Select.Option value="10">A</Select.Option>
+					<Select.Option value="9">A-</Select.Option>
+					<Select.Option value="8">B+</Select.Option>
+					<Select.Option value="7">B</Select.Option>
+					<Select.Option value="6">B-</Select.Option>
+					<Select.Option value="5">C+</Select.Option>
+					<Select.Option value="4">C</Select.Option>
+					<Select.Option value="3">C-</Select.Option>
+					<Select.Option value="2">D+</Select.Option>
+					<Select.Option value="1">D</Select.Option>
+					<Select.Option value="0">F</Select.Option>
 				</Select>
 			</Form.Item>
 
@@ -73,24 +98,22 @@ const CreateReviewForm = () => {
 			>
 				<Select allowClear>
 					<Select.Option value="5">5</Select.Option>
-          <Select.Option value="4">4</Select.Option>
-          <Select.Option value="3">3</Select.Option>
-          <Select.Option value="2">2</Select.Option>
-          <Select.Option value="1">1</Select.Option>
+					<Select.Option value="4">4</Select.Option>
+					<Select.Option value="3">3</Select.Option>
+					<Select.Option value="2">2</Select.Option>
+					<Select.Option value="1">1</Select.Option>
 				</Select>
 			</Form.Item>
 
 			<Form.Item
 				label="Comment"
 				name="comment"
-				rules={
-					[
-						// {
-						//   required: true,
-						//   message: 'Please input your password!',
-						// },
-					]
-				}
+				rules={[
+					{
+						required: true,
+						message: "Please input the comment!",
+					},
+				]}
 			>
 				<Input.TextArea />
 			</Form.Item>
