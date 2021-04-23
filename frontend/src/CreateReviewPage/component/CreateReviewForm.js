@@ -1,9 +1,7 @@
 import React from "react";
 import axios from 'axios';
-import {useParams} from 'react-router-dom';
 import { Form, Input, Button, Select } from "antd";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 const layout = {
 	labelCol: {
@@ -21,13 +19,13 @@ const tailLayout = {
 };
 
 const CreateReviewForm = () => {
-	// const courseCode = useParams().courseCode;
-	// console.log(courseCode);
+	const courseCode = useParams().courseCode;
+	
 
 	const onFinish = (values) => {
 		console.log("Success:", values);
-		//{courseCode}
-		axios.post(`http://localhost:5000/course/COMP3322/createReview`, {
+		
+		axios.post(`http://localhost:5000/course/${values.courseCode}/createReview`, {
       	creator: "607c3bb267d44441586b6ff8",
       	grade: values.grade,
       	workload: values.workload,
