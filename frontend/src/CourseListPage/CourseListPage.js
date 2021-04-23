@@ -8,7 +8,7 @@ const { Search } = Input;
 const { Panel } = Collapse;
 
 
-const CoursePage = () => {
+const CourseListPage = () => {
 	const [newPath, setNewPath] = useState("");
 
 	const searchFunc = value => {
@@ -145,4 +145,4 @@ const CoursePage = () => {
 	);
 };
 
-export default CoursePage;
+export default CourseListPage;
