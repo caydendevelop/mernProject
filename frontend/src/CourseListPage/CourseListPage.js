@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React , {useState}from "react";
+import { Link, Redirect} from "react-router-dom";
 import "./CourseListPage.css";
 import { Button, Input, Collapse } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
@@ -7,7 +7,17 @@ import { SearchOutlined } from "@ant-design/icons";
 const { Search } = Input;
 const { Panel } = Collapse;
 
+
 const CoursePage = () => {
+	const [newPath, setNewPath] = useState("");
+
+	const searchFunc = value => {
+		setNewPath("/course/" + value);
+		console.log(newPath);
+		
+	};
+	if(newPath != "")
+		return <Redirect to={newPath} />;
 	return (
 		<React.StrictMode>
 			<div className="backgroundImageDiv">
@@ -21,7 +31,9 @@ const CoursePage = () => {
 						allowClear
 						enterButton
 						size="large"
+						onSearch={searchFunc}
 					/>
+					
 				</div>
 			</div>
 

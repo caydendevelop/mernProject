@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./CoursePage.css";
-import { Button } from "antd";
+import { Button, Result } from "antd";
 import CourseDetail from "./component/CourseDetail";
 import CourseRating from "./component/CourseRating";
 import CourseReview from "./component/CourseReview";
@@ -25,6 +25,8 @@ const CoursePage = () => {
 
 	const courseCode = useParams().courseCode;
 
+	const [errorStatus, setErrorStatus] = useState();
+
 	console.log(courseCode);
 
 	useEffect(() => {
@@ -35,7 +37,7 @@ const CoursePage = () => {
 				setHasLoaded(true);
 			})
 			.catch((err) => {
-				console.log(err);
+				setErrorStatus(err.response.status);
 			});
 
 		axios
@@ -46,47 +48,59 @@ const CoursePage = () => {
 				console.log(loadedReview);
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log(err.response.data);
 			});
 	}, []);
 
-	return (
-		<React.Fragment>
-			<div className="coursePage">
-				<div className="courseDetailDiv">
-					<CourseDetail items={loadedCourse} status={hasLoaded} />
+	if (errorStatus == 404) {
+		return (
+			<Result
+				status="404"
+				title="404"
+				subTitle="Sorry, the page you visited does not exist."
+				extra={<Link to="/course"><Button type="primary">Back to Course List</Button></Link>}
+				style={{ marginTop: '6em' }}
+				
+			/>
+		);
+	} else {
+		return (
+			<React.Fragment>
+				<div className="coursePage">
+					<div className="courseDetailDiv">
+						<CourseDetail items={loadedCourse} status={hasLoaded} />
+					</div>
+
+					<div className="courseRatingDiv">
+						<CourseRating />
+					</div>
+
+					<hr style={dividerStyle} />
+
+					<h2>User Review</h2>
+
+					<div className="courseReviewDiv">
+						{loadedReview.map((rev) => (
+							<CourseReview
+								userName={rev.creator}
+								comment={rev.comment}
+								grade={rev.grade}
+								workload={rev.workload}
+							/>
+						))}
+
+						{/* <CourseReview items={loadedReview[0]} /> */}
+					</div>
+
+					<div className="createReviewDiv">
+						<Link to="/course/:coursecode/createreview">
+							<Button type="primary">Create Review</Button>
+						</Link>
+					</div>
 				</div>
-
-				<div className="courseRatingDiv">
-					<CourseRating />
-				</div>
-
-				<hr style={dividerStyle} />
-
-				<h2>User Review</h2>
-
-				<div className="courseReviewDiv">
-					{loadedReview.map((rev) => (
-						<CourseReview
-							userName={rev.creator}
-							comment={rev.comment}
-							grade={rev.grade}
-							workload={rev.workload}
-							
-						/>
-					))}
-
-					{/* <CourseReview items={loadedReview[0]} /> */}
-				</div>
-
-				<div className="createReviewDiv">
-					<Link to="/course/:coursecode/createreview">
-						<Button type="primary">Create Review</Button>
-					</Link>
-				</div>
-			</div>
-		</React.Fragment>
-	);
+			</React.Fragment>
+		);
+	}
 };
 
 export default CoursePage;
