@@ -21,8 +21,13 @@ const App = () => {
 			<Route path="/signup" exact component={SignupPage}/>
 			<Route path="/login" exact component={LoginPage}/>
 			<Route path="/course" exact component={CourseListPage}/>
+<<<<<<< HEAD
 			<Route path="/course/:courseCode" component={CoursePage}/>
 			<Route path="/course/:courseCode/createreview" exact component={CreateReviewPage}/>
+=======
+			<Route path="/course/COMP3322" exact component={CoursePage}/>
+			<Route path="/course/COMP3322/createreview" exact component={CreateReviewPage}/>
+>>>>>>> 69c921936d386de3c6c08006beeb680217b7b9e6
 		</BrowserRouter>
 	);
 };
