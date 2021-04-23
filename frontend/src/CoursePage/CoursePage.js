@@ -29,6 +29,9 @@ const CoursePage = () => {
 
 	console.log(courseCode);
 
+	let createReviewLink;
+	createReviewLink = "/course/" + courseCode + "/createreview";
+
 	useEffect(() => {
 		axios
 			.get(`http://localhost:5000/course/${courseCode}`)
@@ -93,7 +96,7 @@ const CoursePage = () => {
 					</div>
 
 					<div className="createReviewDiv">
-						<Link to="/course/:coursecode/createreview">
+						<Link to={createReviewLink}>
 							<Button type="primary">Create Review</Button>
 						</Link>
 					</div>
