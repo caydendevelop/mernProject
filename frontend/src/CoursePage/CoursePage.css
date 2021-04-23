@@ -1,0 +1,27 @@
+.coursePage {
+	width: 70%;
+	margin-left: 15%;
+	margin-right: 15%;
+}
+
+.courseDetailDiv {
+	margin-top: 3em;
+	padding: 2em 2em 0em 2em;
+	background-color: #fafafa;
+}
+
+.courseRatingDiv {
+	padding: 0em 2em 2em 2em;
+	display: flex;
+	justify-content: space-between;
+	background-color: #fafafa;
+}
+
+.courseReviewDiv {
+}
+
+.createReviewDiv {
+	margin-top: 2em;
+
+	padding-bottom: 2em;
+}
