@@ -81,7 +81,7 @@ const createReview = async (req, res, next) => {
 		workload,
 		comment,
 		courseCode,
-		creator,
+		creator: req.userData.userId
 	});
 
 	let course, user;

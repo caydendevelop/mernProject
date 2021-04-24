@@ -10,21 +10,24 @@ import CreateReviewPage from "./CreateReviewPage/CreateReviewPage";
 import { AuthContext } from "./shared/context/auth-context";
 
 const App = () => {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [token, setToken] = useState(null);
+	const [userId, setUserId] = useState(null);
 
-	const login = useCallback(() => {
-		setIsLoggedIn(true);
+	const login = useCallback((uid, token) => {
+		setToken(token);
+		setUserId(uid);
 	}, []);
 
 	const logout = useCallback(() => {
-		setIsLoggedIn(false);
+		setToken(null);
+		setUserId(null);
 	}, []);
 
 	let routes;
 
-	if (isLoggedIn) {
+	if (token) {
 		routes = (
-			<React.Fragment>
+			<Switch>
 				<Route path="/" exact component={IndexPage} />
 				<Route path="/course" exact component={CourseListPage} />
 				<Route path="/course/:courseCode" exact component={CoursePage} />
@@ -33,26 +36,30 @@ const App = () => {
 					exact
 					component={CreateReviewPage}
 				/>
-				<Redirect to="/" />
-			</React.Fragment>
+				<Redirect to="/course" />
+			</Switch>
 		);
 	} else {
 		routes = (
-			<React.Fragment>
+			<Switch>
 				<Route path="/" exact component={IndexPage} />
 				<Route path="/signup" exact component={SignupPage} />
 				<Route path="/login" exact component={LoginPage} />
 				<Route path="/course" exact component={CourseListPage} />
 				<Route path="/course/:courseCode" exact component={CoursePage} />
-				{/* <Redirect to="/login" /> */}
-				<Redirect to="/" />
-			</React.Fragment>
+			</Switch>
 		);
 	}
 
 	return (
 		<AuthContext.Provider
-			value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+			value={{
+				isLoggedIn: !!token, // !!token : true if token is not null, else, false
+				token: token,
+				userId: userId,
+				login: login,
+				logout: logout,
+			}} 
 		>
 			<BrowserRouter>
 				<Navbar />

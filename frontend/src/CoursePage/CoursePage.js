@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./CoursePage.css";
 import { Button, Result } from "antd";
@@ -6,6 +6,7 @@ import CourseDetail from "./component/CourseDetail";
 import CourseRating from "./component/CourseRating";
 import CourseReview from "./component/CourseReview";
 import axios from "axios";
+import {AuthContext} from "../shared/context/auth-context";
 
 const dividerStyle = {
 	marginTop: "1em",
@@ -19,13 +20,11 @@ const dividerStyle = {
 const CoursePage = () => {
 	const [loadedCourse, setLoadedCourse] = useState(null);
 	const [hasLoaded, setHasLoaded] = useState(false);
-
 	const [loadedReview, setLoadedReview] = useState([]);
 	const [hasLoaded2, setHasLoaded2] = useState(false);
-
 	const courseCode = useParams().courseCode;
-
 	const [errorStatus, setErrorStatus] = useState();
+	const auth = useContext(AuthContext);
 
 	console.log(courseCode);
 
@@ -48,12 +47,12 @@ const CoursePage = () => {
 			.then((res) => {
 				setLoadedReview(res.data.review);
 				setHasLoaded2(true);
-				console.log(loadedReview);
+				
 			})
 			.catch((err) => {
 				console.log(err.response.data);
 			});
-	}, [courseCode, loadedReview]);
+	}, []);
 
 	if (errorStatus === 404) {
 		return (
@@ -61,9 +60,12 @@ const CoursePage = () => {
 				status="404"
 				title="404"
 				subTitle="Sorry, the page you visited does not exist."
-				extra={<Link to="/course"><Button type="primary">Back to Course List</Button></Link>}
-				style={{ marginTop: '6em' }}
-				
+				extra={
+					<Link to="/course">
+						<Button type="primary">Back to Course List</Button>
+					</Link>
+				}
+				style={{ marginTop: "6em" }}
 			/>
 		);
 	} else {
@@ -96,9 +98,11 @@ const CoursePage = () => {
 					</div>
 
 					<div className="createReviewDiv">
-						<Link to={createReviewLink}>
-							<Button type="primary">Create Review</Button>
-						</Link>
+						{auth.isLoggedIn && (
+							<Link to={createReviewLink}>
+								<Button type="primary">Create Review</Button>
+							</Link>
+						) }
 					</div>
 				</div>
 			</React.Fragment>

@@ -1,7 +1,8 @@
-import React from "react";
-import axios from 'axios';
+import React , {useContext} from "react";
+import axios from "axios";
 import { Form, Input, Button, Select } from "antd";
 import { useParams } from "react-router-dom";
+import {AuthContext} from '../../shared/context/auth-context';
 
 const layout = {
 	labelCol: {
@@ -20,21 +21,29 @@ const tailLayout = {
 
 const CreateReviewForm = () => {
 	const courseCode = useParams().courseCode;
-	
+	const auth = useContext(AuthContext);
 
 	const onFinish = (values) => {
 		console.log("Success:", values);
-		
-		axios.post(`http://localhost:5000/course/${values.courseCode}/createReview`, {
-      	creator: "6082a4841d96c12dacedaa81",
-      	grade: values.grade,
-      	workload: values.workload,
-      	comment: values.comment
-		}, { 
-		headers: { "Content-Type": "application/json" },
-		})
-		.then(response => response.status)
-		.catch(err => console.warn(err.response.data.message));
+
+		axios
+			.post(
+				`http://localhost:5000/course/${values.courseCode}/createReview`,
+				{
+					creator: values.creator,
+					grade: values.grade,
+					workload: values.workload,
+					comment: values.comment,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization" : "Bearer " + values.token
+					},
+				}
+			)
+			.then((response) => response.status)
+			.catch((err) => console.warn(err.response.data.message));
 	};
 
 	const onFinishFailed = (errorInfo) => {
@@ -51,11 +60,9 @@ const CreateReviewForm = () => {
 			onFinish={onFinish}
 			onFinishFailed={onFinishFailed}
 		>
-			<Form.Item
-				name="courseCode"
-				hidden="true"
-				initialValue={courseCode}
-			/>
+			<Form.Item name="courseCode" hidden="true" initialValue={courseCode} />
+			<Form.Item name="token" hidden="true" initialValue={auth.token} />
+			<Form.Item name="creator" hidden="true" initialValue={auth.userId} />
 
 			<Form.Item
 				label="Grade"
@@ -105,14 +112,12 @@ const CreateReviewForm = () => {
 			<Form.Item
 				label="Comment"
 				name="comment"
-				rules={
-					[
-						{
-						  required: true,
-						  message: 'Please input the comment!',
-						},
-					]
-				}
+				rules={[
+					{
+						required: true,
+						message: "Please input the comment!",
+					},
+				]}
 			>
 				<Input.TextArea />
 			</Form.Item>

@@ -4,30 +4,30 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const getUserById = async (req, res, next) => {
-  const placeId = req.params.pid;
+// const getUserById = async (req, res, next) => {
+//   const placeId = req.params.pid;
 
-  let place;
-  try {
-    place = await Place.findById(placeId);
-  } catch (err) {
-    const error = new HttpError(
-      'Something went wrong, could not find a place.',
-      500
-    );
-    return next(error);
-  }
+//   let place;
+//   try {
+//     place = await Place.findById(placeId);
+//   } catch (err) {
+//     const error = new HttpError(
+//       'Something went wrong, could not find a place.',
+//       500
+//     );
+//     return next(error);
+//   }
 
-  if (!place) {
-    const error = new HttpError(
-      'Could not find place for the provided id.',
-      404
-    );
-    return next(error);
-  }
+//   if (!place) {
+//     const error = new HttpError(
+//       'Could not find place for the provided id.',
+//       404
+//     );
+//     return next(error);
+//   }
 
-  res.json({ place: place.toObject({ getters: true }) });
-};
+//   res.json({ place: place.toObject({ getters: true }) });
+// };
 
 
 
@@ -147,7 +147,7 @@ const login = async (req, res, next) => {
 		return next(error);
 	}
 
-	res.json({
+	res.json({ // append to response.data{}
 		message: "Logged in",
 		userId: existingUser.id,
     email: existingUser.email,
