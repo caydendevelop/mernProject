@@ -38,6 +38,7 @@ const App = () => {
 					component={CreateReviewPage}
 				/>
 				<Route path="/timetable" exact component={TimetablePage} />
+				<Route path="/user/:courseCode/addToTimetable" />
 				<Redirect to="/course" />
 			</Switch>
 		);

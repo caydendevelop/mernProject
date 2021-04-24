@@ -6,7 +6,7 @@ import CourseDetail from "./component/CourseDetail";
 import CourseRating from "./component/CourseRating";
 import CourseReview from "./component/CourseReview";
 import axios from "axios";
-import {AuthContext} from "../shared/context/auth-context";
+import { AuthContext } from "../shared/context/auth-context";
 
 const dividerStyle = {
 	marginTop: "1em",
@@ -28,8 +28,9 @@ const CoursePage = () => {
 
 	console.log(courseCode);
 
-	let createReviewLink;
-	createReviewLink = "/course/" + courseCode + "/createreview";
+	let createReviewLink = "/course/" + courseCode + "/createreview";
+
+	let addToTimetableLink = "/user/" + courseCode + "addToTimetable";
 
 	useEffect(() => {
 		axios
@@ -47,7 +48,6 @@ const CoursePage = () => {
 			.then((res) => {
 				setLoadedReview(res.data.review);
 				setHasLoaded2(true);
-				
 			})
 			.catch((err) => {
 				console.log(err.response.data);
@@ -93,16 +93,18 @@ const CoursePage = () => {
 								workload={rev.workload}
 							/>
 						))}
-
-						{/* <CourseReview items={loadedReview[0]} /> */}
 					</div>
 
 					<div className="createReviewDiv">
 						{auth.isLoggedIn && (
-							<Link to={createReviewLink}>
-								<Button type="primary">Create Review</Button>
-							</Link>
-						) }
+							<React.Fragment>
+								<Link to={createReviewLink}>
+									<Button type="primary">Create Review</Button>
+								</Link>
+
+								<Button type="primary">Add to timetable</Button>
+							</React.Fragment>
+						)}
 					</div>
 				</div>
 			</React.Fragment>
