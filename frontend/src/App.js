@@ -8,6 +8,7 @@ import CoursePage from "./CoursePage/CoursePage";
 import Navbar from "./shared/component/Navbar";
 import CreateReviewPage from "./CreateReviewPage/CreateReviewPage";
 import { AuthContext } from "./shared/context/auth-context";
+import TimetablePage from "./TimetablePage/TimetablePage";
 
 const App = () => {
 	const [token, setToken] = useState(null);
@@ -36,6 +37,7 @@ const App = () => {
 					exact
 					component={CreateReviewPage}
 				/>
+				<Route path="/timetable" exact component={TimetablePage} />
 				<Redirect to="/course" />
 			</Switch>
 		);

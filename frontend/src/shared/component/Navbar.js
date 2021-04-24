@@ -16,7 +16,7 @@ const Navbar = () => {
 	const auth = useContext(AuthContext); // the whole component will re-render when auth is changed (provided by useContext)
 	const logoutFunc = () => {
 		auth.logout();
-	}
+	};
 
 	return (
 		<Menu
@@ -38,13 +38,13 @@ const Navbar = () => {
 				<Link to="/course">Course List Page</Link>
 			</Menu.Item>
 
-			<Menu.Item key="CoursePage">
+			{/* <Menu.Item key="CoursePage">
 				<Link to="/course/:coursecode">CoursePage</Link>
-			</Menu.Item>
+			</Menu.Item> */}
 
-			<Menu.Item key="CreateReviewPage">
+			{/* <Menu.Item key="CreateReviewPage">
 				<Link to="/course/:coursecode/createreview">CreateReviewPage</Link>
-			</Menu.Item>
+			</Menu.Item> */}
 
 			{!auth.isLoggedIn ? (
 				<SubMenu key="SubMenu" title="Authentication">
@@ -56,9 +56,14 @@ const Navbar = () => {
 					</Menu.Item>
 				</SubMenu>
 			) : (
-				<Menu.Item key="Logout" onClick={logoutFunc}>
-					Logout
-				</Menu.Item>
+				<React.Fragment>
+					<Menu.Item key="TimatablePage">
+						<Link to="/timetable">Timetable Page</Link>
+					</Menu.Item>
+					<Menu.Item key="Logout" onClick={logoutFunc}>
+						Logout
+					</Menu.Item>
+				</React.Fragment>
 			)}
 		</Menu>
 	);
