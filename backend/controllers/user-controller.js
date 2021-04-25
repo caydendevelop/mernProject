@@ -89,8 +89,14 @@ const getUserCourseAdded = async (req, res, next) => {
 		);
 	}
 
-	res.json({ // response.data contains courseAdded array with objects
- 		courseAdded: user.courseAdded.map(i => i)
+	res.json({
+		// response.data contains courseAdded array with objects
+		courseAdded: user.courseAdded.map((i) => ({
+			text: i.courseCode,
+			startDate: i.startDate,
+			endDate: i.endDate,
+			recurranceRule: i.recurranceRule,
+		})),
 	});
 };
 

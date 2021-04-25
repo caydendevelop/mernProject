@@ -39,7 +39,7 @@ const Calendar = (props) => {
 	// 			},
 	// 			{
 	// 				id: 2,
-	// 				text: "Event 2",
+	// 				text: {props.courseArray.courseCode},
 	// 				start: "2021-09-14T09:30:00",
 	// 				end: "2021-09-14T11:30:00",
 	// 			},

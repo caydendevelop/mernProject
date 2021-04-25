@@ -8,6 +8,9 @@ const courseSchema = new Schema({
 	description: { type: String, required: true },
 	instructor: { type: String , required: true},
 	time: { type: String, required: true },
+	startDate: {type: String, required: true},
+	endDate: {type: String, required: true},
+	recurranceRule: {type: String, required: true},
 	averageGrade: { type: String },
 	averageWorkload: { type: Number },
 	review: [{ type: mongoose.Types.ObjectId, ref: "Review" }]
