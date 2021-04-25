@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./CoursePage.css";
-import { Button, Result } from "antd";
+import { Button, Result, Modal } from "antd";
 import CourseDetail from "./component/CourseDetail";
 import CourseRating from "./component/CourseRating";
 import CourseReview from "./component/CourseReview";
@@ -33,6 +33,22 @@ const CoursePage = () => {
 	let userId = auth.userId;
 	let token = auth.token;
 
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [failmessage, setFailMessage] = useState("");
+
+  	const showModal = () => {
+   	 	setIsModalVisible(true);
+  	};
+
+ 	const handleOk = () => {
+    	setIsModalVisible(false);
+	
+  	};
+
+  	const handleCancel = () => {
+    	setIsModalVisible(false);
+  	};
+
 	const addCourseFunc = (userId, courseCode, token) => {
 		axios
 			.post(
@@ -49,7 +65,11 @@ const CoursePage = () => {
 				}
 			)
 			.then((response) => response.status)
-			.catch((err) => console.warn(err.response.data.message));
+			.catch(function (error) {
+				console.log(error.response)
+				setFailMessage(error.response.data.message)
+				showModal()
+			});
 	};
 
 	useEffect(() => {
@@ -91,6 +111,19 @@ const CoursePage = () => {
 	} else {
 		return (
 			<React.Fragment>
+				<Modal 
+				title="Add to timetable fail" 
+				visible={isModalVisible} 
+				onOk={handleOk}
+				onCancel={handleCancel}
+				footer={
+				   <Button key="ok" onClick={handleOk}>
+					Ok
+				   </Button>
+				}	
+				>
+				<p>{failmessage}</p>
+      			</Modal>
 				<div className="coursePage">
 					<div className="courseDetailDiv">
 						<CourseDetail items={loadedCourse} status={hasLoaded} />
