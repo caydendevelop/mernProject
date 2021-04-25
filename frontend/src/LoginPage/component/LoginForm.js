@@ -99,8 +99,8 @@ const LoginForm = () => {
 				rules={[
 					{
 						required: true,
-						pattern: "^[A-Za-z0-9._%+-]+@hku.hk$",
-						message: "Please input your email!",
+						pattern: "^[A-Za-z0-9._%+-]+@connect.hku.hk$",
+						message: "Please input your email in @connect.hku.hk!",
 					},
 				]}
 			>

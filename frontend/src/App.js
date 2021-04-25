@@ -39,7 +39,7 @@ const App = () => {
 				/>
 				<Route path="/timetable" exact component={TimetablePage} />
 				<Route path="/user/:courseCode/addToTimetable" />
-				<Redirect to="/course" />
+				<Redirect to="/" />
 			</Switch>
 		);
 	} else {

@@ -1,6 +1,7 @@
-import React , {useContext} from "react";
+import React , {StrictMode, useContext, useState} from "react";
 import axios from "axios";
-import { Form, Input, Button, Select } from "antd";
+import { Redirect} from "react-router-dom";
+import { Form, Input, Button, Select, Modal } from "antd";
 import { useParams } from "react-router-dom";
 import {AuthContext} from '../../shared/context/auth-context';
 
@@ -23,6 +24,24 @@ const CreateReviewForm = () => {
 	const courseCode = useParams().courseCode;
 	const auth = useContext(AuthContext);
 
+	const [failmessage, setFailMessage] = useState("");
+	const [path, setPath] = useState("")
+
+	const [isModalVisible, setIsModalVisible] = useState(false);
+
+  	const showModal = () => {
+   	 	setIsModalVisible(true);
+  	};
+
+ 	const handleOk = () => {
+    	setIsModalVisible(false);
+	
+  	};
+
+  	const handleCancel = () => {
+    	setIsModalVisible(false);
+  	};
+
 	const onFinish = (values) => {
 		console.log("Success:", values);
 
@@ -42,15 +61,42 @@ const CreateReviewForm = () => {
 					},
 				}
 			)
-			.then((response) => response.status)
-			.catch((err) => console.warn(err.response.data.message));
+			.then(function (response) {
+				console.log(response.status)
+				setFailMessage("Created Review.")
+				showModal()
+			})
+			.catch(function (error) {
+				console.log(error.response)
+				setFailMessage(error.response.data.message)
+				showModal()
+			});
 	};
+
+	if (failmessage === "Created Review.") {
+		setPath("/course/" + {courseCode})
+		return (<Redirect to={path} />) 
+	}
 
 	const onFinishFailed = (errorInfo) => {
 		console.log("Failed:", errorInfo);
 	};
 
 	return (
+		<StrictMode>
+		<Modal 
+				title="Create Review Fail" 
+				visible={isModalVisible} 
+				onOk={handleOk}
+				onCancel={handleCancel}
+				footer={
+				   <Button key="ok" onClick={handleOk}>
+					Ok
+				   </Button>
+				}	
+			>
+				<p>{failmessage}</p>
+      		</Modal>
 		<Form
 			{...layout}
 			name="basic"
@@ -128,6 +174,7 @@ const CreateReviewForm = () => {
 				</Button>
 			</Form.Item>
 		</Form>
+		</StrictMode>
 	);
 };
 
