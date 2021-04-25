@@ -89,7 +89,7 @@ const createReview = async (req, res, next) => {
 		course = await Course.findOne({ courseCode: courseCode })
 			.populate("review")
 			.exec();
-		user = await User.findById(creator).populate("review");
+		user = await User.findById(creator).populate("review"); // populate = get the data contained by that id, not only the id
 	} catch (err) {
 		const error = new HttpError(
 			"Creating review step 1 failed, please try again.",
@@ -126,7 +126,7 @@ const createReview = async (req, res, next) => {
 	try {
 		const sess = await mongoose.startSession();
 		sess.startTransaction();
-		
+
 		await createdReview.save({ session: sess });
 
 		course.review.push(createdReview);
