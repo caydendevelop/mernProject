@@ -1,6 +1,4 @@
-import 'devextreme/dist/css/dx.common.css';
-import 'devextreme/dist/css/dx.light.css';
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import IndexPage from "./IndexPage/IndexPage";
 import SignupPage from "./SignupPage/SignupPage";
@@ -16,15 +14,26 @@ const App = () => {
 	const [token, setToken] = useState(null);
 	const [userId, setUserId] = useState(null);
 
+	
+
 	const login = useCallback((uid, token) => {
 		setToken(token);
+		localStorage.setItem('userData', JSON.stringify({userId: uid, token: token}));
 		setUserId(uid);
 	}, []);
 
 	const logout = useCallback(() => {
 		setToken(null);
 		setUserId(null);
+		localStorage.removeItem('userData');
 	}, []);
+
+	useEffect( () => {
+		const storedData = JSON.parse(localStorage.getItem('userData'));
+		if (storedData && storedData.token) {
+			login(storedData.userId, storedData.token);
+		}
+	}, [login]);
 
 	let routes;
 

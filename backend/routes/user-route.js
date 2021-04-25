@@ -18,7 +18,9 @@ router.post(
 );
 
 router.post('/login', userController.login);
+router.get('/getUser/:userId', userController.getUserCourseAdded);
 router.use(checkAuth);
 router.post('/:courseCode/addToTimetable', userController.addCourse);
+
 
 module.exports = router;
