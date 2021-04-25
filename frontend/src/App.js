@@ -1,3 +1,5 @@
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
 import React, { useState, useCallback } from "react";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import IndexPage from "./IndexPage/IndexPage";
@@ -50,6 +52,7 @@ const App = () => {
 				<Route path="/login" exact component={LoginPage} />
 				<Route path="/course" exact component={CourseListPage} />
 				<Route path="/course/:courseCode" exact component={CoursePage} />
+				<Route path="/timetable" exact component={TimetablePage} />
 			</Switch>
 		);
 	}
