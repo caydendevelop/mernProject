@@ -24,37 +24,19 @@ class Calendar extends Component {
   }
 
   componentDidMount() {
-
     // load event data
-    this.setState({
-      startDate: "2021-09-15",
-      events: [
-        {
-          id: 1,
-          text: "Event 1",
-          start: "2021-09-14T10:30:00",
-          end: "2021-09-14T13:00:00"
-        },
-        {
-          id: 2,
-          text: "Event 2",
-          start: "2021-09-14T09:30:00",
-          end: "2021-09-14T11:30:00",
-          
-        },
-        {
-          id: 2,
-          text: "Event 3",
-          start: "2021-09-14T12:00:00",
-          end: "2021-09-14T15:00:00",
-          
-        },
-      ]
-    });
+    this.setState(this.props.courseArray);
+    console.log("componentDidMount: " , this.props.courseArray)
+  }
+
+  componentWillMount() {
+    // load event data
+    this.setState(this.props.courseArray);
+    console.log("componentWillMount: ", this.props.courseArray)
   }
 
   render() {
-    var {...config} = this.state;
+    let {...config} = this.state;
     return (
       <div style={styles.wrap}>
         <div style={styles.left}>

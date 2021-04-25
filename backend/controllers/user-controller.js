@@ -41,7 +41,7 @@ const addCourse = async (req, res, next) => {
 	console.log("courseId is :" + courseId);
 
 	for (i of user.courseAdded) {
-		console.log("i is :" + i)
+		console.log("i is :" + i);
 		// check whether the user has added the same course before
 		if (i == courseId) {
 			const error = new HttpError(
@@ -66,6 +66,32 @@ const addCourse = async (req, res, next) => {
 		return next(error);
 	}
 	res.status(201).json({ message: "success add course to user" });
+};
+
+const getUserCourseAdded = async (req, res, next) => {
+	const userId = req.params.userId;
+
+	// let places;
+	let user;
+	try {
+		user = await User.findById(userId).populate("courseAdded");
+	} catch (err) {
+		const error = new HttpError("Fetching user failed, please try again.", 500);
+		return next(error);
+	}
+
+	if (!user || user.courseAdded.length === 0) {
+		return next(
+			new HttpError(
+				"Could not find added course for the provided user id.",
+				404
+			)
+		);
+	}
+
+	res.json({ // response.data contains courseAdded array with objects
+ 		courseAdded: user.courseAdded.map(i => i)
+	});
 };
 
 const signup = async (req, res, next) => {
@@ -194,5 +220,6 @@ const login = async (req, res, next) => {
 };
 
 exports.addCourse = addCourse;
+exports.getUserCourseAdded = getUserCourseAdded;
 exports.signup = signup;
 exports.login = login;
