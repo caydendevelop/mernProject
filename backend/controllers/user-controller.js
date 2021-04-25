@@ -11,7 +11,7 @@ const addCourse = async (req, res, next) => {
 
 	let user, course;
 	try {
-		user = await User.findById(req.body.userId).populate('courseAdded');
+		user = await User.findById(req.body.userId);
 		course = await Course.findOne({ courseCode: courseCode }).exec();
 	} catch (err) {
 		const error = new HttpError(
@@ -38,8 +38,10 @@ const addCourse = async (req, res, next) => {
 	}
 
 	let courseId = course.id;
+	console.log("courseId is :" + courseId);
 
 	for (i of user.courseAdded) {
+		console.log("i is :" + i)
 		// check whether the user has added the same course before
 		if (i == courseId) {
 			const error = new HttpError(
@@ -48,7 +50,7 @@ const addCourse = async (req, res, next) => {
 			);
 			return next(error);
 		}
-	};
+	}
 
 	try {
 		const sess = await mongoose.startSession();
@@ -60,10 +62,7 @@ const addCourse = async (req, res, next) => {
 		await sess.commitTransaction();
 	} catch (err) {
 		console.log(err);
-		const error = new HttpError(
-			"Adding course to user failed.",
-			500
-		);
+		const error = new HttpError("Adding course to user failed.", 500);
 		return next(error);
 	}
 	res.status(201).json({ message: "success add course to user" });
@@ -170,7 +169,7 @@ const login = async (req, res, next) => {
 		return next(error);
 	}
 
-  let token;
+	let token;
 	try {
 		token = jwt.sign(
 			{ userId: existingUser.id, email: existingUser.email },
@@ -185,11 +184,12 @@ const login = async (req, res, next) => {
 		return next(error);
 	}
 
-	res.json({ // append to response.data{}
+	res.json({
+		// append to response.data{}
 		message: "Logged in",
 		userId: existingUser.id,
-    email: existingUser.email,
-    token: token
+		email: existingUser.email,
+		token: token,
 	});
 };
 
