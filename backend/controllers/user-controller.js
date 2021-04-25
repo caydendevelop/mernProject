@@ -1,10 +1,72 @@
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
+const Course = require("../models/course");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const addCourse = (req, res, next) => {};
+const addCourse = (req, res, next) => {
+	const courseCode = req.params.courseCode;
+
+	let user, course;
+	try {
+		user = await User.findById(req.body.userId).populate('courseAdded');
+		course = await Course.findOne({ courseCode: courseCode }).exec();
+	} catch (err) {
+		const error = new HttpError(
+			"Something went wrong, could not find a user.",
+			500
+		);
+		return next(error);
+	}
+
+	if (!user) {
+		const error = new HttpError(
+			"Could not find user for the provided user id.",
+			404
+		);
+		return next(error);
+	}
+
+	if (!course) {
+		const error = new HttpError(
+			"Could not find course for the provided course code.",
+			404
+		);
+		return next(error);
+	}
+
+	let courseId = course.id;
+
+	for (i of user.courseAdded) {
+		// check whether the user has added the same course before
+		if (i == courseId) {
+			const error = new HttpError(
+				"Could not add the same course more than once.",
+				500
+			);
+			return next(error);
+		}
+	};
+
+	try {
+		const sess = await mongoose.startSession();
+		sess.startTransaction();
+
+		user.addedCourse.push(course);
+		await user.save({ session: sess });
+
+		await sess.commitTransaction();
+	} catch (err) {
+		console.log(err);
+		const error = new HttpError(
+			"Adding course to user failed.",
+			500
+		);
+		return next(error);
+	}
+	res.status(201).json({ message: "success add course to user" });
+};
 
 const signup = async (req, res, next) => {
 	const errors = validationResult(req);
