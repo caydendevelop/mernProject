@@ -4,8 +4,9 @@ const User = require("../models/user");
 const Course = require("../models/course");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 
-const addCourse = (req, res, next) => {
+const addCourse = async (req, res, next) => {
 	const courseCode = req.params.courseCode;
 
 	let user, course;
@@ -53,7 +54,7 @@ const addCourse = (req, res, next) => {
 		const sess = await mongoose.startSession();
 		sess.startTransaction();
 
-		user.addedCourse.push(course);
+		user.courseAdded.push(course);
 		await user.save({ session: sess });
 
 		await sess.commitTransaction();

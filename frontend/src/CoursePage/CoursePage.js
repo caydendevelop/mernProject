@@ -8,6 +8,7 @@ import CourseReview from "./component/CourseReview";
 import axios from "axios";
 import { AuthContext } from "../shared/context/auth-context";
 
+
 const dividerStyle = {
 	marginTop: "1em",
 	marginBottom: "1em",
@@ -29,8 +30,27 @@ const CoursePage = () => {
 	console.log(courseCode);
 
 	let createReviewLink = "/course/" + courseCode + "/createreview";
+	let userId = auth.userId;
+	let token = auth.token;
 
-	let addToTimetableLink = "/user/" + courseCode + "addToTimetable";
+	const addCourseFunc = (userId, courseCode, token) => {
+		axios
+			.post(
+				`http://localhost:5000/user/${courseCode}/addToTimetable`,
+				{
+					userId: userId,
+					// courseCode: courseCode 
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization" : "Bearer " + token
+					}
+				}
+			)
+			.then((response) => response.status)
+			.catch((err) => console.warn(err.response.data.message));
+	};
 
 	useEffect(() => {
 		axios
@@ -102,7 +122,7 @@ const CoursePage = () => {
 									<Button type="primary">Create Review</Button>
 								</Link>
 
-								<Button type="primary">Add to timetable</Button>
+								<Button type="primary" onClick={() => addCourseFunc(userId, courseCode, token)}>Add to timetable</Button>
 							</React.Fragment>
 						)}
 					</div>
