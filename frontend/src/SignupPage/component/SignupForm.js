@@ -1,5 +1,5 @@
-import React from 'react';
-import { Form, Input, Button } from 'antd';
+import {React, useState, StrictMode} from 'react';
+import { Form, Input, Button, Modal } from 'antd';
 import axios from "axios"
 
 const layout = {
@@ -18,6 +18,22 @@ const tailLayout = {
 };
 
 const SignupForm = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [failmessage, setFailMessage] = useState("");
+
+  	const showModal = () => {
+   	 	setIsModalVisible(true);
+  	};
+
+ 	const handleOk = () => {
+    	setIsModalVisible(false);
+	
+  	};
+
+  const handleCancel = () => {
+  	setIsModalVisible(false);
+  };
+
   const onFinish = (values) => {
     console.log('Submit Register Form Success');
     axios.post(`http://localhost:5000/user/signup`, {
@@ -29,7 +45,11 @@ const SignupForm = () => {
       headers: { "Content-Type": "application/json" },
     })
     .then(response => response.status)
-    .catch(err => console.warn(err.response));
+    .catch(function (error) {
+      console.log(error.response)
+      setFailMessage(error.response.data.message)
+      showModal()
+    });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -37,6 +57,20 @@ const SignupForm = () => {
   };
 
   return (
+    <StrictMode>
+    <Modal 
+				title="Signup Fail" 
+				visible={isModalVisible} 
+				onOk={handleOk}
+				onCancel={handleCancel}
+				footer={
+				   <Button key="ok" onClick={handleOk}>
+					Ok
+				   </Button>
+				}	
+			>
+				<p>{failmessage}</p>
+    </Modal>
     <Form
       {...layout}
       name="basic"
@@ -52,7 +86,8 @@ const SignupForm = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your uid!',
+            pattern: "^[3][0-9]{9}$",
+            message: 'Please input valid uid (example : 303500001)!',
           },
         ]}
       >
@@ -78,7 +113,8 @@ const SignupForm = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your email!',
+            pattern: "^[A-Za-z0-9._%+-]+@connect.hku.hk$",
+            message: 'Please input valid HKU email (with example@connect.hku.hk)!',
           },
         ]}
       >
@@ -91,7 +127,8 @@ const SignupForm = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your password!',
+            message: 'Please input your password with minimum eight characters, at least one letter and one number!',
+            pattern: "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
           },
         ]}
       >
@@ -104,6 +141,7 @@ const SignupForm = () => {
         </Button>
       </Form.Item>
     </Form>
+    </StrictMode>
   );
 };
 

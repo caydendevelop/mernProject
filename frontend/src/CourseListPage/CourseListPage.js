@@ -1,7 +1,7 @@
 import React , {useState}from "react";
 import { Link, Redirect} from "react-router-dom";
 import "./CourseListPage.css";
-import { Button, Input, Collapse } from "antd";
+import { Button, Input, Collapse, Modal} from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
 const { Search } = Input;
@@ -11,15 +11,47 @@ const { Panel } = Collapse;
 const CourseListPage = () => {
 	const [newPath, setNewPath] = useState("");
 
+	const [isModalVisible, setIsModalVisible] = useState(false);
+
+  	const showModal = () => {
+   	 setIsModalVisible(true);
+  	};
+
+ 	const handleOk = () => {
+    	setIsModalVisible(false);
+	
+  	};
+
+  	const handleCancel = () => {
+    	setIsModalVisible(false);
+  	};
+
 	const searchFunc = value => {
 		setNewPath("/course/" + value);
 		console.log(newPath);
-		
+		if (value === "")
+			showModal();
 	};
-	if(newPath !== "")
-		return <Redirect to={newPath} />;
+
+	if ((newPath !== "") && (newPath !== "/course/"))
+			return (<Redirect to={newPath} />) 
+	
+	
 	return (
 		<React.StrictMode>
+			<Modal 
+				title="Incorrect Search" 
+				visible={isModalVisible} 
+				onOk={handleOk}
+				onCancel={handleCancel}
+				footer={
+				   <Button key="ok" onClick={handleOk}>
+					Ok
+				   </Button>
+				}	
+			>
+				<p>Your search course field cant be empty to search!</p>
+      		</Modal>
 			<div className="backgroundImageDiv">
 				<div className="contentAboveBackgoundImage">
 					<h1 className="h1_1_style">

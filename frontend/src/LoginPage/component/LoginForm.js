@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Form, Input, Button } from "antd";
+import React, { useContext, useState, StrictMode } from "react";
+import { Form, Input, Button, Modal} from "antd";
 import { AuthContext } from "../../shared/context/auth-context";
 import axios from 'axios'
 
@@ -20,9 +20,25 @@ const tailLayout = {
 
 const LoginForm = () => {
 	const auth = useContext(AuthContext);
+	const [failmessage, setFailMessage] = useState("");
+
+	const [isModalVisible, setIsModalVisible] = useState(false);
+
+  	const showModal = () => {
+   	 	setIsModalVisible(true);
+  	};
+
+ 	const handleOk = () => {
+    	setIsModalVisible(false);
+	
+  	};
+
+  	const handleCancel = () => {
+    	setIsModalVisible(false);
+  	};
 
 	const onFinish = (values) => {
-		console.log("Submit Login Form Success");
+		console.log("Submit Login Success");
 		axios
 			.post(
 				`http://localhost:5000/user/login`,
@@ -41,7 +57,11 @@ const LoginForm = () => {
           return response.status;
         }
       )
-			.catch((err) => console.warn(err.response));
+			.catch( function (error) {
+					console.log(error.response)
+					setFailMessage(error.response.data.message)
+					showModal()
+			});
       
 	};
 
@@ -50,6 +70,20 @@ const LoginForm = () => {
 	};
 
 	return (
+		<StrictMode>
+			<Modal 
+				title="Login Fail" 
+				visible={isModalVisible} 
+				onOk={handleOk}
+				onCancel={handleCancel}
+				footer={
+				   <Button key="ok" onClick={handleOk}>
+					Ok
+				   </Button>
+				}	
+			>
+				<p>{failmessage}</p>
+      		</Modal>
 		<Form
 			{...layout}
 			name="basic"
@@ -65,6 +99,7 @@ const LoginForm = () => {
 				rules={[
 					{
 						required: true,
+						pattern: "^[A-Za-z0-9._%+-]+@hku.hk$",
 						message: "Please input your email!",
 					},
 				]}
@@ -91,6 +126,8 @@ const LoginForm = () => {
 				</Button>
 			</Form.Item>
 		</Form>
+		</StrictMode>
+		
 	);
 };
 
