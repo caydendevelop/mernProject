@@ -10,7 +10,7 @@ const courseSchema = new Schema({
 	time: { type: String, required: true },
 	startDate: {type: String, required: true},
 	endDate: {type: String, required: true},
-	recurranceRule: {type: String, required: true},
+	recurrenceRule: {type: String, required: true},
 	averageGrade: { type: String },
 	averageWorkload: { type: Number },
 	review: [{ type: mongoose.Types.ObjectId, ref: "Review" }]

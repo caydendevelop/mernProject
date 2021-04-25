@@ -95,7 +95,7 @@ const getUserCourseAdded = async (req, res, next) => {
 			text: i.courseCode,
 			startDate: i.startDate,
 			endDate: i.endDate,
-			recurranceRule: i.recurranceRule,
+			recurrenceRule: i.recurrenceRule,
 		})),
 	});
 };

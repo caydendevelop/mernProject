@@ -9,6 +9,7 @@ const TimetablePage = () => {
 	const [hasLoaded, setHasLoaded] = useState(false);
 
 	const auth = useContext(AuthContext);
+  console.log(auth)
 	let userId = auth.userId;
 	let token = auth.token;
 
@@ -23,7 +24,7 @@ const TimetablePage = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, []);
+	}, [userId]);
 
   
   console.log(loadedUser);
@@ -33,7 +34,8 @@ const TimetablePage = () => {
 		<React.Fragment>
 			<div className="timatablePage">
 				<h1 className="h1_title">Timetable</h1>
-				<Calender courseArray={loadedUser} />
+
+				{hasLoaded &&  <Calender courseArray={loadedUser}/> }
 				{/* <Calender /> */}
 			</div>
 		</React.Fragment>

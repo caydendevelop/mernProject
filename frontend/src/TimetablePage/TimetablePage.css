@@ -5,7 +5,27 @@
   margin-top: 4em;
 }
 
-
 .h1_title{
   text-align: center;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.dx-scheduler-cell-sizes-horizontal {
+  width: 90px;
+}
+.dx-scheduler-cell-sizes-vertical {
+  height: 30px;
+}
+
+#scheduler {
+  height: 800px;
+  width: 100%;
+}
+
+.timatablePage {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 4em;
 }

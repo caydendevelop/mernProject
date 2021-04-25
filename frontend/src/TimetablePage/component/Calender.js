@@ -22,13 +22,15 @@ const recurringAppointments = [
   }
 ];
 
-let date = new Date(2021, 3, 25);
+let date = new Date();
  
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.schedulerRef = React.createRef();
         this.deleteAppointment = this.deleteAppointment.bind(this);
+        //console.log(this.props.courseArray);
+        //console.log(recurringAppointments)
     }
  
     get scheduler() {
@@ -42,8 +44,9 @@ class App extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Scheduler
-                     dataSource={recurringAppointments}
+                <Scheduler 
+                     id="scheduler"
+                     dataSource={this.props.courseArray.courseAdded}
                      defaultCurrentDate={date}
                      defaultCurrentView="week"
                      firstDayOfWeek={0}
