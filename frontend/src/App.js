@@ -52,15 +52,16 @@ const App = () => {
 			</Switch>
 		);
 	} else {
-		routes = (
-			<Switch>
+		routes = ( //Here if use switch will not redirect
+			<React.Fragment>
 				<Route path="/" exact component={IndexPage} />
 				<Route path="/signup" exact component={SignupPage} />
 				<Route path="/login" exact component={LoginPage} />
 				<Route path="/course" exact component={CourseListPage} />
 				<Route path="/course/:courseCode" exact component={CoursePage} />
 				<Route path="/timetable" exact component={TimetablePage} />
-			</Switch>
+				<Redirect to="/" />
+			</React.Fragment>
 		);
 	}
 

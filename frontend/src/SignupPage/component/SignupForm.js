@@ -1,6 +1,7 @@
 import {React, useState, StrictMode} from 'react';
 import { Form, Input, Button, Modal } from 'antd';
 import axios from "axios"
+import { Redirect } from 'react-router';
 
 const layout = {
   labelCol: {
@@ -19,15 +20,19 @@ const tailLayout = {
 
 const SignupForm = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [failmessage, setFailMessage] = useState("");
+  const [message, setMessage] = useState("");
+  const [title, setTitle] = useState("")
+  const [createdac, setcreatedac] = useState(false);
 
   	const showModal = () => {
    	 	setIsModalVisible(true);
   	};
 
- 	const handleOk = () => {
-    	setIsModalVisible(false);
-	
+ 	  const handleOk = () => {
+      setIsModalVisible(false);
+      if (title === "Signup Success") {
+        setcreatedac(true)
+      }
   	};
 
   const handleCancel = () => {
@@ -44,10 +49,16 @@ const SignupForm = () => {
     }, { 
       headers: { "Content-Type": "application/json" },
     })
-    .then(response => response.status)
+    .then(function (response) {
+      console.log(response.status)
+      setMessage("Please login with your new account")
+      setTitle("Signup Success")
+      showModal()
+    })
     .catch(function (error) {
       console.log(error.response)
-      setFailMessage(error.response.data.message)
+      setTitle("Signup Failed")
+      setMessage(error.response.data.message)
       showModal()
     });
   };
@@ -56,10 +67,14 @@ const SignupForm = () => {
     console.log('Failed:', errorInfo);
   };
 
+  if (createdac) {
+    return (<Redirect to="/" />)
+  }
+
   return (
     <StrictMode>
     <Modal 
-				title="Signup Fail" 
+				title={title}
 				visible={isModalVisible} 
 				onOk={handleOk}
 				onCancel={handleCancel}
@@ -69,7 +84,7 @@ const SignupForm = () => {
 				   </Button>
 				}	
 			>
-				<p>{failmessage}</p>
+				<p>{message}</p>
     </Modal>
     <Form
       {...layout}
@@ -87,7 +102,7 @@ const SignupForm = () => {
           {
             required: true,
             pattern: "^[3][0-9]{9}$",
-            message: 'Please input valid uid (example : 303500001)!',
+            message: 'Please input valid uid (example : 3035000001)!',
           },
         ]}
       >
@@ -128,7 +143,7 @@ const SignupForm = () => {
           {
             required: true,
             message: 'Please input your password with minimum eight characters, at least one letter and one number!',
-            pattern: "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+            pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})"
           },
         ]}
       >

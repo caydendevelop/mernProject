@@ -34,7 +34,8 @@ const CoursePage = () => {
 	let token = auth.token;
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
-	const [failmessage, setFailMessage] = useState("");
+	const [message, setMessage] = useState("");
+	const [title, setTitle] = useState("");
 
   	const showModal = () => {
    	 	setIsModalVisible(true);
@@ -64,10 +65,16 @@ const CoursePage = () => {
 					}
 				}
 			)
-			.then((response) => response.status)
+			.then(function (response) {
+				console.log(response.status)
+				setTitle("Add to Timetable Success")
+				setMessage("Added to your course timetable planner")
+				showModal()
+			})
 			.catch(function (error) {
 				console.log(error.response)
-				setFailMessage(error.response.data.message)
+				setTitle("Add to Timetable Failed")
+				setMessage(error.response.data.message)
 				showModal()
 			});
 	};
@@ -112,7 +119,7 @@ const CoursePage = () => {
 		return (
 			<React.Fragment>
 				<Modal 
-				title="Add to timetable fail" 
+				title={title}
 				visible={isModalVisible} 
 				onOk={handleOk}
 				onCancel={handleCancel}
@@ -122,7 +129,7 @@ const CoursePage = () => {
 				   </Button>
 				}	
 				>
-				<p>{failmessage}</p>
+				<p>{message}</p>
       			</Modal>
 				<div className="coursePage">
 					<div className="courseDetailDiv">

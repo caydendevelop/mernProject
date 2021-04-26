@@ -9,7 +9,7 @@ const TimetablePage = () => {
 	const [hasLoaded, setHasLoaded] = useState(false);
 
 	const auth = useContext(AuthContext);
-  console.log(auth)
+    console.log(auth)
 	let userId = auth.userId;
 	let token = auth.token;
 
@@ -35,7 +35,7 @@ const TimetablePage = () => {
 			<div className="timatablePage">
 				<h1 className="h1_title">Timetable</h1>
 
-				{hasLoaded &&  <Calender courseArray={loadedUser}/> }
+				{hasLoaded ? (<Calender courseArray={loadedUser}/>) : (<h1 className="h1_title">No Course is added to timetable.</h1>)}
 				{/* <Calender /> */}
 			</div>
 		</React.Fragment>

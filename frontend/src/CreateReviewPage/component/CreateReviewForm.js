@@ -24,7 +24,9 @@ const CreateReviewForm = () => {
 	const courseCode = useParams().courseCode;
 	const auth = useContext(AuthContext);
 
-	const [failmessage, setFailMessage] = useState("");
+	const [message, setMessage] = useState("");
+	const [title, setTitle] = useState("")
+	const [submittedre, setSubmittedre] = useState(false)
 	const [path, setPath] = useState("")
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
@@ -35,7 +37,9 @@ const CreateReviewForm = () => {
 
  	const handleOk = () => {
     	setIsModalVisible(false);
-	
+		setPath("/course/" + courseCode)
+		console.log(path)
+		setSubmittedre(true);
   	};
 
   	const handleCancel = () => {
@@ -63,18 +67,19 @@ const CreateReviewForm = () => {
 			)
 			.then(function (response) {
 				console.log(response.status)
-				setFailMessage("Created Review.")
+				setTitle("Create Review Success")
+				setMessage("Your review has been created")
 				showModal()
 			})
 			.catch(function (error) {
 				console.log(error.response)
-				setFailMessage(error.response.data.message)
+				setTitle("Create Review Failed")
+				setMessage(error.response.data.message)
 				showModal()
 			});
 	};
 
-	if (failmessage === "Created Review.") {
-		setPath("/course/" + {courseCode})
+	if (submittedre) {
 		return (<Redirect to={path} />) 
 	}
 
@@ -85,7 +90,7 @@ const CreateReviewForm = () => {
 	return (
 		<StrictMode>
 		<Modal 
-				title="Create Review Fail" 
+				title={title}
 				visible={isModalVisible} 
 				onOk={handleOk}
 				onCancel={handleCancel}
@@ -95,7 +100,7 @@ const CreateReviewForm = () => {
 				   </Button>
 				}	
 			>
-				<p>{failmessage}</p>
+				<p>{message}</p>
       		</Modal>
 		<Form
 			{...layout}
