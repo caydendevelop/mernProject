@@ -92,8 +92,8 @@ const CourseListPage = () => {
 					</Panel>
 
 					<Panel showArrow={false} header="Faculty of Arts" key="3">
-						<Link to="/course/CHIN1101">
-							<a>CHIN1101 - Creative writing</a>
+						<Link to="/course/CHIN1107">
+							<a>CHIN1107 - Creative writing</a>
 						</Link>
 						<br />
 						<Link to="/course/JAPN1011">
