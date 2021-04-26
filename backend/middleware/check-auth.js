@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
       throw new Error('no token found')
     }
     const decodedToken = jwt.verify(token, "supersecret_dont_share");
-    req.userData = {userId: decodedToken.userId}
+    req.userData = {userId: decodedToken.userId, userName: decodedToken.userName}
     next();    
   } catch (err) { // getting headers failed
     const error = new HttpError('Authentaication failed!', 401);

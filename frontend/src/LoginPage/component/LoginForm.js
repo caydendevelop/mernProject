@@ -53,7 +53,7 @@ const LoginForm = () => {
 			.then(
         (response) => {
           console.log(response);
-          auth.login(response.data.userId, response.data.token);
+          auth.login(response.data.userId, response.data.userName, response.data.token);
           return response.status;
         }
       )

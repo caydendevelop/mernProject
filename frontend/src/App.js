@@ -13,23 +13,26 @@ import TimetablePage from "./TimetablePage/TimetablePage";
 const App = () => {
 	const [token, setToken] = useState(null);
 	const [userId, setUserId] = useState(null);
+	const [userName, setUserName] = useState(null);
 
-	const login = useCallback((uid, token) => {
+	const login = useCallback((uid, userName, token) => {
 		setToken(token);
-		localStorage.setItem('userData', JSON.stringify({userId: uid, token: token}));
+		localStorage.setItem('userData', JSON.stringify({userId: uid, userName: userName, token: token}));
 		setUserId(uid);
+		setUserName(userName);
 	}, []);
 
 	const logout = useCallback(() => {
 		setToken(null);
 		setUserId(null);
+		setUserName(null);
 		localStorage.removeItem('userData');
 	}, []);
 
 	useEffect( () => {
 		const storedData = JSON.parse(localStorage.getItem('userData'));
-		if (storedData && storedData.token) {
-			login(storedData.userId, storedData.token);
+		if (storedData && storedData.userName && storedData.token) {
+			login(storedData.userId, storedData.userName, storedData.token);
 		}
 	}, [login]);
 
@@ -71,6 +74,7 @@ const App = () => {
 				isLoggedIn: !!token, // !!token : true if token is not null, else, false
 				token: token,
 				userId: userId,
+				userName: userName,
 				login: login,
 				logout: logout,
 			}} 

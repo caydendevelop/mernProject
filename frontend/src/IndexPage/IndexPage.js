@@ -6,11 +6,12 @@ import { AuthContext } from "../shared/context/auth-context";
 
 const IndexPage = () => {
 	const auth = useContext(AuthContext);
+	let userName = auth.userName;
 
-	let routes 
+	let routes;
 	if (auth.isLoggedIn) {
 		routes = (
-			<h5 className="h5_3_style"> <br></br> Welcome Back! </h5>
+			<h5 className="h5_3_style"> <br></br> Welcome Back! {userName}</h5>
 		);
 	}
 	else {
