@@ -8,7 +8,6 @@ import CourseReview from "./component/CourseReview";
 import axios from "axios";
 import { AuthContext } from "../shared/context/auth-context";
 
-
 const dividerStyle = {
 	marginTop: "1em",
 	marginBottom: "1em",
@@ -23,9 +22,12 @@ const CoursePage = () => {
 	const [hasLoaded, setHasLoaded] = useState(false);
 	const [loadedReview, setLoadedReview] = useState([]);
 	const [hasLoaded2, setHasLoaded2] = useState(false);
+	const [hasLoaded3, setHasLoaded3] = useState(false);
 	const courseCode = useParams().courseCode;
 	const [errorStatus, setErrorStatus] = useState();
 	const auth = useContext(AuthContext);
+	// let sumOfWorkload = 0;
+	const [sumOfWorkload, setSumOfWorkload] = useState(0);
 
 	console.log(courseCode);
 
@@ -37,18 +39,17 @@ const CoursePage = () => {
 	const [message, setMessage] = useState("");
 	const [title, setTitle] = useState("");
 
-  	const showModal = () => {
-   	 	setIsModalVisible(true);
-  	};
+	const showModal = () => {
+		setIsModalVisible(true);
+	};
 
- 	const handleOk = () => {
-    	setIsModalVisible(false);
-	
-  	};
+	const handleOk = () => {
+		setIsModalVisible(false);
+	};
 
-  	const handleCancel = () => {
-    	setIsModalVisible(false);
-  	};
+	const handleCancel = () => {
+		setIsModalVisible(false);
+	};
 
 	const addCourseFunc = (userId, courseCode, token) => {
 		axios
@@ -56,26 +57,26 @@ const CoursePage = () => {
 				`http://localhost:5000/user/${courseCode}/addToTimetable`,
 				{
 					userId: userId,
-					// courseCode: courseCode 
+					// courseCode: courseCode
 				},
 				{
 					headers: {
 						"Content-Type": "application/json",
-						"Authorization" : "Bearer " + token
-					}
+						Authorization: "Bearer " + token,
+					},
 				}
 			)
 			.then(function (response) {
-				console.log(response.status)
-				setTitle("Add to Timetable Success")
-				setMessage("Added to your course timetable planner")
-				showModal()
+				console.log(response.status);
+				setTitle("Add to Timetable Success");
+				setMessage("Added to your course timetable planner");
+				showModal();
 			})
 			.catch(function (error) {
-				console.log(error.response)
-				setTitle("Add to Timetable Failed")
-				setMessage(error.response.data.message)
-				showModal()
+				console.log(error.response);
+				setTitle("Add to Timetable Failed");
+				setMessage(error.response.data.message);
+				showModal();
 			});
 	};
 
@@ -95,6 +96,13 @@ const CoursePage = () => {
 			.then((res) => {
 				setLoadedReview(res.data.review);
 				setHasLoaded2(true);
+				let temp = 0;
+				for (let i = 0; i < res.data.review.length; i++) {
+					temp += res.data.review[i].workload;
+					setSumOfWorkload(temp);
+				}
+				setSumOfWorkload(temp/res.data.review.length);
+				setHasLoaded3(true);
 			})
 			.catch((err) => {
 				console.log(err.response.data);
@@ -118,26 +126,26 @@ const CoursePage = () => {
 	} else {
 		return (
 			<React.Fragment>
-				<Modal 
-				title={title}
-				visible={isModalVisible} 
-				onOk={handleOk}
-				onCancel={handleCancel}
-				footer={
-				   <Button key="ok" onClick={handleOk}>
-					Ok
-				   </Button>
-				}	
+				<Modal
+					title={title}
+					visible={isModalVisible}
+					onOk={handleOk}
+					onCancel={handleCancel}
+					footer={
+						<Button key="ok" onClick={handleOk}>
+							Ok
+						</Button>
+					}
 				>
-				<p>{message}</p>
-      			</Modal>
+					<p>{message}</p>
+				</Modal>
 				<div className="coursePage">
 					<div className="courseDetailDiv">
 						<CourseDetail items={loadedCourse} status={hasLoaded} />
 					</div>
 
 					<div className="courseRatingDiv">
-						<CourseRating />
+					 {hasLoaded3 && <CourseRating workload={sumOfWorkload} />} 
 					</div>
 
 					<hr style={dividerStyle} />
@@ -162,7 +170,12 @@ const CoursePage = () => {
 									<Button type="primary">Create Review</Button>
 								</Link>
 
-								<Button type="primary" onClick={() => addCourseFunc(userId, courseCode, token)}>Add to timetable</Button>
+								<Button
+									type="primary"
+									onClick={() => addCourseFunc(userId, courseCode, token)}
+								>
+									Add to timetable
+								</Button>
 							</React.Fragment>
 						)}
 					</div>

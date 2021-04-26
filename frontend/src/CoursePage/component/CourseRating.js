@@ -1,7 +1,7 @@
 import React from "react";
 import "./CourseRating.css";
 
-const CourseRating = () => {
+const CourseRating = (props) => {
 	return (
 		<React.Fragment>
 			<div className="gradeDiv">
@@ -14,7 +14,7 @@ const CourseRating = () => {
 			<div className="workloadDiv">
 				<div>
 					<h3>Average Workload: </h3>
-					<h1>4/5</h1>
+					<h1>{props.workload}</h1>
 				</div>
 			</div>
 		</React.Fragment>

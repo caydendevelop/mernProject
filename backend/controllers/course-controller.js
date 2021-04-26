@@ -62,6 +62,7 @@ const getReviewByCourseCode = async (req, res, next) => {
 	res.json({
 		review: courseWithReview.review.map(
 			(input) => input
+		
 		)
 	});
 };
