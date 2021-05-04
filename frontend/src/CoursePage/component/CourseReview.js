@@ -3,6 +3,48 @@ import { Row, Col } from "antd";
 import "./CourseReview.css";
 
 const CourseReview = (props) => {
+	let averageGrade = "";
+	switch (props.grade) {
+		case 11:
+			averageGrade = "A+";
+			break;
+		case 10:
+			averageGrade = "A";
+			break;
+		case 9:
+			averageGrade = "A-";
+			break;
+		case 8:
+			averageGrade = "B+";
+			break;
+		case 7:
+			averageGrade = "B";
+			break;
+		case 6:
+			averageGrade = "B-";
+			break;
+		case 5:
+			averageGrade = "C+";
+			break;
+		case 4:
+			averageGrade = "C";
+			break;
+		case 3:
+			averageGrade = "C-";
+			break;
+		case 2:
+			averageGrade = "D+";
+			break;
+		case 1:
+			averageGrade = "D";
+			break;
+		case 0:
+			averageGrade = "F";
+			break;
+		default:
+			averageGrade = "404 Not Found";
+	}
+
 	return (
 		<React.Fragment>
 			<div className="courseReview">
@@ -30,7 +72,7 @@ const CourseReview = (props) => {
 							{/* need 1 extra div to apply the display:flex and align-item: center */}
 							<div>
 								<h2>Grade: </h2>
-								<h1>{props.grade}</h1>
+								<h1>{averageGrade}</h1>
 							</div>
 						</div>
 					</Col>
