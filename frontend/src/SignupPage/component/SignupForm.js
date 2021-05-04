@@ -142,7 +142,7 @@ const SignupForm = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your password with minimum eight characters, at least one letter and one number!',
+            message: 'Please input your password with minimum eight characters, at least 1 uppercase + 1 lowercase + 1 number!',
             pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})"
           },
         ]}
