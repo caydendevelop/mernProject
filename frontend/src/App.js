@@ -51,7 +51,7 @@ const App = () => {
 				/>
 				<Route path="/timetable" exact component={TimetablePage} />
 				<Route path="/user/:courseCode/addToTimetable" />
-				<Redirect to="/" />
+				{/* <Redirect to="/" /> */}
 			</Switch>
 		);
 	} else {
@@ -63,7 +63,7 @@ const App = () => {
 				<Route path="/course" exact component={CourseListPage} />
 				<Route path="/course/:courseCode" exact component={CoursePage} />
 				<Route path="/timetable" exact component={TimetablePage} />
-				<Redirect to="/" />
+				{/* <Redirect to="/" /> */}
 			</React.Fragment>
 		);
 	}

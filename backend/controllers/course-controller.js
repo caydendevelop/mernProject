@@ -37,7 +37,6 @@ const getReviewByCourseCode = async (req, res, next) => {
 	let courseWithReview;
 	try {
 		courseWithReview = await Course.findOne({ courseCode: courseCode2 })
-
 			.populate({
 				path : 'review',
 				populate : {

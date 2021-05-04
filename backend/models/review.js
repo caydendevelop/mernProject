@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema({
-  grade: { type: String, required: true },
+  grade: { type: Number, required: true },
   workload: { type: Number, required: true },
   comment: { type: String, required: true },
   courseCode: { type: String, required: true, ref: 'Course' },

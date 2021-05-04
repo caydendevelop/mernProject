@@ -18,16 +18,22 @@ const dividerStyle = {
 };
 
 const CoursePage = () => {
-	const [loadedCourse, setLoadedCourse] = useState(null);
+	
 	const [hasLoaded, setHasLoaded] = useState(false);
-	const [loadedReview, setLoadedReview] = useState([]);
 	const [hasLoaded2, setHasLoaded2] = useState(false);
 	const [hasLoaded3, setHasLoaded3] = useState(false);
+	const [hasLoaded4, setHasLoaded4] = useState(false);
+
+	const [loadedCourse, setLoadedCourse] = useState(null);
+	const [loadedReview, setLoadedReview] = useState([]);
+	const [sumOfWorkload, setSumOfWorkload] = useState(0);
+	const [sumOfGrade, setSumOfGrade] = useState(0);
+	
 	const courseCode = useParams().courseCode;
 	const [errorStatus, setErrorStatus] = useState();
 	const auth = useContext(AuthContext);
 	// let sumOfWorkload = 0;
-	const [sumOfWorkload, setSumOfWorkload] = useState(0);
+	
 
 	console.log(courseCode);
 
@@ -96,13 +102,24 @@ const CoursePage = () => {
 			.then((res) => {
 				setLoadedReview(res.data.review);
 				setHasLoaded2(true);
-				let temp = 0;
+
+				let temp = 0; // loop for the workload in the review
 				for (let i = 0; i < res.data.review.length; i++) {
 					temp += res.data.review[i].workload;
 					setSumOfWorkload(temp);
 				}
 				setSumOfWorkload(temp/res.data.review.length);
 				setHasLoaded3(true);
+
+				let temp2 = 0; // loop for the grade in the review
+				for (let i = 0; i < res.data.review.length; i++) {
+					temp2 += res.data.review[i].grade;
+					setSumOfGrade(temp2);
+				}
+				temp2 = Math.round(temp2/res.data.review.length);
+				setSumOfGrade(temp2);
+				setHasLoaded4(true);
+
 			})
 			.catch((err) => {
 				console.log(err.response.data);
@@ -145,7 +162,7 @@ const CoursePage = () => {
 					</div>
 
 					<div className="courseRatingDiv">
-					 {hasLoaded3 && <CourseRating workload={sumOfWorkload} />} 
+					 {hasLoaded3 && <CourseRating workload={sumOfWorkload} grade={sumOfGrade} />} 
 					</div>
 
 					<hr style={dividerStyle} />
