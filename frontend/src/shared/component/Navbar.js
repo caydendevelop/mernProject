@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Menu } from "antd";
 import { AuthContext } from "../../shared/context/auth-context";
 import "antd/dist/antd.css";
@@ -8,6 +8,8 @@ import "./Navbar.css";
 const { SubMenu } = Menu;
 
 const Navbar = () => {
+	const history = useHistory();
+
 	const [current, setCurrent] = useState("indexPage");
 	const navBarStyle = {
 		fontSize: "16px",
@@ -18,6 +20,7 @@ const Navbar = () => {
 
 	const logoutFunc = () => {
 		auth.logout();
+		history.push("/course");
 	};
 
 	return (

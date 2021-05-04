@@ -2,6 +2,8 @@ import React, { useContext, useState, StrictMode } from "react";
 import { Form, Input, Button, Modal} from "antd";
 import { AuthContext } from "../../shared/context/auth-context";
 import axios from 'axios'
+import { Redirect } from "react-router";
+import {useHistory} from "react-router-dom";
 
 const layout = {
 	labelCol: {
@@ -20,6 +22,9 @@ const tailLayout = {
 
 const LoginForm = () => {
 	const auth = useContext(AuthContext);
+
+	const history = useHistory();
+	
 	const [failmessage, setFailMessage] = useState("");
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
@@ -54,7 +59,9 @@ const LoginForm = () => {
         (response) => {
           console.log(response);
           auth.login(response.data.userId, response.data.userName, response.data.token);
-          return response.status;
+					history.push("/");
+					return response.status;
+					
         }
       )
 			.catch( function (error) {
@@ -68,6 +75,10 @@ const LoginForm = () => {
 	const onFinishFailed = (errorInfo) => {
 		console.log("Failed:", errorInfo);
 	};
+
+	// if(auth.isLoggedIn){
+	// 	
+	// }
 
 	return (
 		<StrictMode>

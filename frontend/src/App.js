@@ -63,7 +63,7 @@ const App = () => {
 				<Route path="/course" exact component={CourseListPage} />
 				<Route path="/course/:courseCode" exact component={CoursePage} />
 				<Route path="/timetable" exact component={TimetablePage} />
-				{/* <Redirect to="/" /> */}
+				{/* <Redirect to="/" />  this would redirect to Index Page every Refresh!!*/} 
 			</React.Fragment>
 		);
 	}
