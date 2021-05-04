@@ -18,7 +18,6 @@ const dividerStyle = {
 };
 
 const CoursePage = () => {
-	
 	const [hasLoaded, setHasLoaded] = useState(false);
 	const [hasLoaded2, setHasLoaded2] = useState(false);
 	const [hasLoaded3, setHasLoaded3] = useState(false);
@@ -28,12 +27,11 @@ const CoursePage = () => {
 	const [loadedReview, setLoadedReview] = useState([]);
 	const [sumOfWorkload, setSumOfWorkload] = useState(0);
 	const [sumOfGrade, setSumOfGrade] = useState(0);
-	
+
 	const courseCode = useParams().courseCode;
 	const [errorStatus, setErrorStatus] = useState();
 	const auth = useContext(AuthContext);
 	// let sumOfWorkload = 0;
-	
 
 	console.log(courseCode);
 
@@ -108,7 +106,7 @@ const CoursePage = () => {
 					temp += res.data.review[i].workload;
 					setSumOfWorkload(temp);
 				}
-				setSumOfWorkload(temp/res.data.review.length);
+				setSumOfWorkload(temp / res.data.review.length);
 				setHasLoaded3(true);
 
 				let temp2 = 0; // loop for the grade in the review
@@ -116,10 +114,9 @@ const CoursePage = () => {
 					temp2 += res.data.review[i].grade;
 					setSumOfGrade(temp2);
 				}
-				temp2 = Math.round(temp2/res.data.review.length);
+				temp2 = Math.round(temp2 / res.data.review.length);
 				setSumOfGrade(temp2);
 				setHasLoaded4(true);
-
 			})
 			.catch((err) => {
 				console.log(err.response.data);
@@ -162,7 +159,9 @@ const CoursePage = () => {
 					</div>
 
 					<div className="courseRatingDiv">
-					 {hasLoaded3 && <CourseRating workload={sumOfWorkload} grade={sumOfGrade} />} 
+						{hasLoaded3 && (
+							<CourseRating workload={sumOfWorkload} grade={sumOfGrade} />
+						)}
 					</div>
 
 					<hr style={dividerStyle} />
@@ -186,13 +185,14 @@ const CoursePage = () => {
 								<Link to={createReviewLink}>
 									<Button type="primary">Create Review</Button>
 								</Link>
-
-								<Button
-									type="primary"
-									onClick={() => addCourseFunc(userId, courseCode, token)}
-								>
-									Add to timetable
-								</Button>
+								<span className="addToTimetableSpan">
+									<Button
+										type="primary"
+										onClick={() => addCourseFunc(userId, courseCode, token)}
+									>
+										Add to timetable
+									</Button>
+								</span>
 							</React.Fragment>
 						)}
 					</div>
