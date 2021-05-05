@@ -8,15 +8,16 @@ const router = express.Router();
 
 router.post(
 	"/signup",
-	[
-		check("uid").not().isEmpty(),
-		check("userName").not().isEmpty(),
-		check("email").normalizeEmail().isEmail(),
-		check("password").isLength({ min: 6 }),
-	],
+	// [
+	// 	check("uid").not().isEmpty(),
+	// 	check("userName").not().isEmpty(),
+	// 	check("email").normalizeEmail().isEmail(),
+	// 	check("password").isLength({ min: 6 }),
+	// ],
 	userController.signup
 );
 
+router.post("/signup",userController.signup);
 router.post('/login', userController.login);
 router.get('/getUser/:userId', userController.getUserCourseAdded);
 router.use(checkAuth);
