@@ -109,17 +109,26 @@ const signup = async (req, res, next) => {
 	}
 	const { uid, userName, email, password } = req.body;
 
-	let existingUser;
+	let existedEmail;
 	try {
-		existingUser = await User.findOne({ email: email });
+		existedEmail = await User.findOne({ email: email });
+		existedUid = await User.findOne({ uid: uid });
 	} catch (err) {
-		const error = new HttpError("email has already been registered.", 500);
+		const error = new HttpError("User has already been registered.", 500);
 		return next(error);
 	}
 
-	if (existingUser) {
+	if (existedEmail) {
 		const error = new HttpError(
-			"User exists already, please login instead.",
+			"email has already been registered.",
+			422
+		);
+		return next(error);
+	}
+
+	if (existedUid) {
+		const error = new HttpError(
+			"uid has already been registered.",
 			422
 		);
 		return next(error);
