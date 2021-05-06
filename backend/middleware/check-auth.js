@@ -2,7 +2,7 @@ const HttpError = require("../models/http-error");
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
-  try{
+  try {
     const token = req.headers.authorization.split(' ')[1]; // Authorization: "Bearer TOKEN"
     if(!token) { // getting headers.authorization success but cannot find token
       throw new Error('no token found')
@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
     req.userData = {userId: decodedToken.userId, userName: decodedToken.userName}
     next();    
   } catch (err) { // getting headers failed
-    const error = new HttpError('Authentaication failed!', 401);
+    const error = new HttpError('Authentication failed!', 401);
     return next(error);
   }
   

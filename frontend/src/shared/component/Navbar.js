@@ -20,7 +20,7 @@ const Navbar = () => {
 
 	const logoutFunc = () => {
 		auth.logout();
-		history.push("/course");
+		history.push("/");
 	};
 
 	return (
