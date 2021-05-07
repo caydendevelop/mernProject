@@ -12,8 +12,6 @@ app.use(bodyParser.json()); // tell the system we want the request be parsed to 
 var cors = require('cors')
 app.use(cors())
 
-
-
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
@@ -21,7 +19,7 @@ app.use((req, res, next) => {
     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-
+    
   next();
 });
 
