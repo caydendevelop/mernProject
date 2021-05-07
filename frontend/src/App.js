@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import IndexPage from "./IndexPage/IndexPage";
 import SignupPage from "./SignupPage/SignupPage";
 import LoginPage from "./LoginPage/LoginPage";
@@ -14,6 +14,7 @@ import { Modal, Button } from "antd";
 let logoutTimer;
 
 const App = () => {
+
 	const [token, setToken] = useState(null);
 	const [tokenExpirationDate, setTokenExpirationDate] = useState();
 	const [userId, setUserId] = useState(null);
@@ -106,6 +107,11 @@ const App = () => {
 				<Route path="/course" exact component={CourseListPage} />
 				<Route path="/course/:courseCode" exact component={CoursePage} />
 				<Route path="/timetable" exact component={TimetablePage} />
+				<Route
+					path="/course/:courseCode/createreview"
+					exact
+					component={CreateReviewPage}
+				/>
 				{/* <Redirect to="/" />  this would redirect to Index Page every Refresh!!*/}
 			</React.Fragment>
 		);
@@ -122,7 +128,7 @@ const App = () => {
 					</Button>
 				}
 			>
-				<h3>Token expired. You are now logged out.</h3>
+				<h3>Session expired. You are now logged out.</h3>
 			</Modal>
 			<AuthContext.Provider
 				value={{

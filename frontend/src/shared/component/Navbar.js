@@ -16,7 +16,6 @@ const Navbar = () => {
 	};
 
 	const auth = useContext(AuthContext); // the whole component will re-render when auth is changed (provided by useContext)
-	let userName = auth.userName;
 
 	const logoutFunc = () => {
 		auth.logout();
